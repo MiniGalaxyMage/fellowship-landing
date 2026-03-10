@@ -373,14 +373,14 @@
 
   </main>
 
-  <script>
-    function copyInstall(btn) {
-      const text = 'npm install -g fellowship-cli';
+  <script is:inline>
+    window.copyInstall = function(btn) {
+      var text = 'npm install -g fellowship-cli';
       function onSuccess() {
-        const orig = btn.textContent;
+        var orig = btn.textContent;
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+        setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
       }
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(onSuccess).catch(fallback);
@@ -388,7 +388,7 @@
         fallback();
       }
       function fallback() {
-        const ta = document.createElement('textarea');
+        var ta = document.createElement('textarea');
         ta.value = text;
         ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
         document.body.appendChild(ta);
@@ -396,7 +396,7 @@
         try { document.execCommand('copy'); onSuccess(); } catch(e) {}
         document.body.removeChild(ta);
       }
-    }
+    };
   </script>
 
 </body>
