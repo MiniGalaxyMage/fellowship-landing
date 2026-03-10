@@ -1,0 +1,618 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fellowship — AI Agent Orchestration</title>
+  <meta name="description" content="Fellowship orchestrates AI coding agents with specs, reviews, and memory — so you ship better code, faster." />
+  <meta property="og:title" content="Fellowship — AI Agent Orchestration" />
+  <meta property="og:description" content="Define teams of AI agents. Auto-generate specs. Writer-Reviewer pattern. Built-in memory." />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-[#0f1729] text-white font-sans antialiased">
+
+  <!-- Background grid -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-purple-700/10 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-0 right-0 w-[600px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px]"></div>
+  </div>
+
+  <main class="relative z-10">
+
+    <!-- ===== HERO ===== -->
+    <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-20 text-center">
+      <div class="animate-fade-in">
+        <img
+          src="/logo.png"
+          alt="Fellowship"
+          width="96"
+          height="96"
+          class="mx-auto mb-6 drop-shadow-[0_0_40px_rgba(124,58,237,0.6)]"
+        />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm mb-8 font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow"></span>
+          v1.0 · Open Source · MIT
+        </div>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1] animate-slide-up" style="animation-delay: 0.1s">
+        Your AI Agents.<br />
+        <span class="gradient-text">One Team.</span><br />
+        One Command.
+      </h1>
+
+      <p class="text-xl text-slate-400 max-w-2xl mb-12 leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
+        Fellowship orchestrates AI coding agents with specs, reviews, and memory —
+        so you ship better code, faster.
+      </p>
+
+      <!-- Install CTA -->
+      <div class="w-full max-w-lg mb-6 animate-slide-up" style="animation-delay: 0.3s">
+        <div class="terminal-cta group" id="install-box">
+          <div class="flex items-center gap-3 flex-1 min-w-0">
+            <span class="text-cyan-400 font-mono font-medium select-none flex-shrink-0">$</span>
+            <code class="text-white font-mono text-sm md:text-base truncate" id="install-cmd">npm install -g fellowship-cli</code>
+          </div>
+          <button
+            onclick="copyInstall(this)"
+            class="copy-btn flex-shrink-0 ml-4"
+            aria-label="Copy install command"
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <a
+        href="https://github.com/MiniGalaxyMage/fellowship"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors duration-200 text-sm animate-slide-up"
+        style="animation-delay: 0.4s"
+      >
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        View on GitHub →
+      </a>
+
+      <!-- Scroll hint -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-600 animate-bounce" aria-hidden="true">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===== PITCH ===== -->
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <p class="text-center text-slate-500 text-xs uppercase tracking-widest mb-12 font-mono">Sound familiar?</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-20">
+          <div class="pain-card">
+            <div class="text-red-400 text-lg mb-3 font-mono">✗</div>
+            <p class="text-slate-300 font-medium leading-snug">"AI agents write code without context"</p>
+          </div>
+          <div class="pain-card">
+            <div class="text-red-400 text-lg mb-3 font-mono">✗</div>
+            <p class="text-slate-300 font-medium leading-snug">"No spec means no quality control"</p>
+          </div>
+          <div class="pain-card">
+            <div class="text-red-400 text-lg mb-3 font-mono">✗</div>
+            <p class="text-slate-300 font-medium leading-snug">"Every run starts from zero — no memory"</p>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Fellowship fixes this.</h2>
+          <p class="text-slate-400 text-lg">Orchestrate your AI agents like a real engineering team.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Built for disciplined AI development</h2>
+        <p class="text-slate-400 text-center mb-16 max-w-2xl mx-auto">
+          Three pillars that transform ad-hoc AI prompts into a structured engineering process.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Feature 1 -->
+          <div class="feature-card">
+            <div class="feature-icon mb-4">
+              <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-purple-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-3">Spec-First Runs</h3>
+            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+              Every task starts with a plan. Fellowship auto-generates a spec from your codebase context before writing a single line.
+            </p>
+            <div class="code-snippet">
+<span class="text-cyan-400">$</span> fellowship run "add JWT auth"
+
+<span class="text-yellow-300">📋</span> Generating spec...
+<span class="text-emerald-400">✅</span> spec/<span class="text-purple-300">001-jwt-auth.md</span>
+   <span class="text-slate-500">12 acceptance criteria</span>
+   <span class="text-slate-500">4 files in scope</span></div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-card">
+            <div class="feature-icon mb-4">
+              <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-cyan-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-3">Writer-Reviewer</h3>
+            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+              One agent writes, another reviews. Automated quality gates with human override when you want it.
+            </p>
+            <div class="code-snippet">
+<span class="text-yellow-300">🤖</span> Writer <span class="text-slate-500">(claude-sonnet)</span>
+   implementing spec...
+
+<span class="text-yellow-300">🔍</span> Reviewer <span class="text-slate-500">(claude-opus)</span>
+   checking criteria...
+   <span class="text-emerald-400">✅ 12/12 criteria met</span></div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-card">
+            <div class="feature-icon mb-4">
+              <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-emerald-400">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-3">Persistent Memory</h3>
+            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+              Learnings, gotchas, architecture decisions — they persist across runs. Your agents get smarter over time.
+            </p>
+            <div class="code-snippet">
+<span class="text-slate-500"># .fellowship/memory.yaml</span>
+gotchas:
+  - <span class="text-emerald-300">"Use bcrypt rounds ≥ 12"</span>
+  - <span class="text-emerald-300">"JWT secret in .env only"</span>
+patterns:
+  - <span class="text-cyan-300">"Repository pattern for DB"</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="py-24 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Three commands. Better code.</h2>
+        <p class="text-slate-400 text-center mb-16">Get from idea to PR in minutes, not hours.</p>
+
+        <div class="terminal shadow-2xl shadow-black/50">
+          <div class="terminal-header">
+            <div class="terminal-dot" style="background:#ff5f57"></div>
+            <div class="terminal-dot" style="background:#ffbd2e"></div>
+            <div class="terminal-dot" style="background:#28c840"></div>
+            <span class="ml-3 text-slate-500 text-xs font-mono">fellowship</span>
+          </div>
+          <div class="p-6 md:p-8 space-y-8 font-mono text-sm">
+
+            <div class="how-step">
+              <div class="step-number">1</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+                  <code class="text-cyan-400 font-medium">fellowship init</code>
+                  <span class="text-slate-600"># Set up your team</span>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                  Creates <code class="text-purple-300">team.yaml</code> — define roles, models, behaviors.
+                  Works on any existing repo with <code class="text-purple-300">fellowship adopt</code>.
+                </p>
+              </div>
+            </div>
+
+            <div class="border-t border-slate-800/60"></div>
+
+            <div class="how-step">
+              <div class="step-number">2</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+                  <code class="text-cyan-400 font-medium">fellowship run "task"</code>
+                  <span class="text-slate-600"># Agent writes + reviewer checks</span>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                  Auto-spec → write → review → scribe. Zero hand-holding.
+                  Add <code class="text-purple-300">--review</code> for human-in-the-loop diff approval.
+                </p>
+              </div>
+            </div>
+
+            <div class="border-t border-slate-800/60"></div>
+
+            <div class="how-step">
+              <div class="step-number">3</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+                  <code class="text-cyan-400 font-medium">git push</code>
+                  <span class="text-slate-600"># Ship it</span>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                  Code reviewed, changelog updated, memory saved. Done.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEMO ===== -->
+    <section class="py-24 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">See it in action</h2>
+        <p class="text-slate-400 text-center mb-16">A real Fellowship session adding JWT authentication.</p>
+
+        <div class="terminal shadow-2xl shadow-black/50">
+          <div class="terminal-header">
+            <div class="terminal-dot" style="background:#ff5f57"></div>
+            <div class="terminal-dot" style="background:#ffbd2e"></div>
+            <div class="terminal-dot" style="background:#28c840"></div>
+            <span class="ml-3 text-slate-500 text-xs font-mono">~/projects/myapp</span>
+          </div>
+          <div class="p-6 md:p-8 font-mono text-sm space-y-1.5">
+            <div class="text-slate-400">
+              <span class="text-cyan-400">$</span> fellowship run "add user authentication with JWT"
+            </div>
+            <div class="text-slate-700">&nbsp;</div>
+
+            <div class="demo-line" style="animation-delay:0.6s">
+              <span class="text-yellow-300">📋</span>
+              <span class="text-slate-300"> Generating spec from codebase context...</span>
+            </div>
+            <div class="demo-line" style="animation-delay:1.4s">
+              <span class="text-emerald-400">✅</span>
+              <span class="text-slate-300"> Spec: <span class="text-purple-300">001-jwt-auth.md</span>
+              <span class="text-slate-500">(12 acceptance criteria)</span></span>
+            </div>
+            <div class="demo-line" style="animation-delay:2.0s">
+              <span class="text-yellow-300">🤖</span>
+              <span class="text-slate-300"> Writer <span class="text-slate-500">(claude-sonnet)</span> implementing...</span>
+            </div>
+            <div class="demo-line" style="animation-delay:4.5s">
+              <span class="text-yellow-300">🔍</span>
+              <span class="text-slate-300"> Reviewer checking against spec...</span>
+            </div>
+            <div class="demo-line" style="animation-delay:6.2s">
+              <span class="text-emerald-400">✅</span>
+              <span class="text-slate-300"> All criteria met. <span class="text-cyan-400">4 files changed</span>, +187/-3</span>
+            </div>
+            <div class="demo-line" style="animation-delay:6.8s">
+              <span class="text-yellow-300">📝</span>
+              <span class="text-slate-300"> Scribe updated <span class="text-purple-300">CHANGELOG.md</span></span>
+            </div>
+            <div class="demo-line" style="animation-delay:7.4s">
+              <span class="text-emerald-400">🚀</span>
+              <span class="text-emerald-400 font-medium"> Ready to push!</span>
+            </div>
+
+            <div class="text-slate-700 pt-1">&nbsp;</div>
+            <div class="demo-line" style="animation-delay:8.0s">
+              <span class="text-cyan-400">$</span>
+              <span class="text-slate-400"> <span class="cursor"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INSTALL CTA ===== -->
+    <section class="py-32 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to ship smarter?</h2>
+        <p class="text-slate-400 mb-12 text-lg">One command to get started. No configuration required.</p>
+
+        <div class="w-full mb-8">
+          <div class="terminal-cta" id="install-box-2">
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+              <span class="text-cyan-400 font-mono font-medium select-none flex-shrink-0">$</span>
+              <code class="text-white font-mono text-sm md:text-base truncate">npm install -g fellowship-cli</code>
+            </div>
+            <button
+              onclick="copyInstall(this)"
+              class="copy-btn flex-shrink-0 ml-4"
+              aria-label="Copy install command"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-6 mb-12">
+          <a
+            href="https://github.com/MiniGalaxyMage/fellowship"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 text-sm font-medium"
+          >
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            ⭐ Star on GitHub
+          </a>
+          <span class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 text-sm">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            MIT Licensed
+          </span>
+        </div>
+
+        <p class="text-slate-600 text-sm">Built with ❤️ by developers, for developers.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function copyInstall(btn) {
+      const text = 'npm install -g fellowship-cli';
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        // Fallback for older browsers
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+
+    // Intersection observer for lazy demo animation
+    const demoLines = document.querySelectorAll('.demo-line');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    demoLines.forEach(line => observer.observe(line));
+  </script>
+
+</body>
+</html>
+
+<style is:global>
+  /* ---- Base ---- */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  /* ---- Background grid ---- */
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ---- Gradient text ---- */
+  .gradient-text {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ---- Terminal CTA ---- */
+  .terminal-cta {
+    display: flex;
+    align-items: center;
+    background: #080e1a;
+    border: 1px solid rgba(45, 212, 191, 0.35);
+    border-radius: 10px;
+    padding: 14px 18px;
+    box-shadow:
+      0 0 0 1px rgba(45, 212, 191, 0.05) inset,
+      0 0 30px rgba(45, 212, 191, 0.08),
+      0 0 60px rgba(45, 212, 191, 0.04);
+    animation: ctaGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes ctaGlow {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px rgba(45, 212, 191, 0.05) inset,
+        0 0 30px rgba(45, 212, 191, 0.08),
+        0 0 60px rgba(45, 212, 191, 0.03);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px rgba(45, 212, 191, 0.08) inset,
+        0 0 40px rgba(45, 212, 191, 0.15),
+        0 0 80px rgba(45, 212, 191, 0.06);
+    }
+  }
+
+  /* ---- Copy button ---- */
+  .copy-btn {
+    background: rgba(45, 212, 191, 0.12);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    border-radius: 6px;
+    color: #2dd4bf;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .copy-btn:hover {
+    background: rgba(45, 212, 191, 0.22);
+    border-color: rgba(45, 212, 191, 0.5);
+  }
+  .copy-btn.copied {
+    background: rgba(52, 211, 153, 0.2);
+    border-color: rgba(52, 211, 153, 0.4);
+    color: #34d399;
+  }
+
+  /* ---- Pain cards ---- */
+  .pain-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-left: 3px solid rgba(239, 68, 68, 0.45);
+    border-radius: 10px;
+    padding: 20px 22px;
+    transition: border-color 0.2s;
+  }
+  .pain-card:hover {
+    border-left-color: rgba(239, 68, 68, 0.7);
+  }
+
+  /* ---- Feature cards ---- */
+  .feature-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 28px;
+    transition: all 0.3s ease;
+  }
+  .feature-card:hover {
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.35);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.12);
+  }
+
+  /* ---- Code snippet inside feature card ---- */
+  .code-snippet {
+    background: #070d18;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-left: 3px solid rgba(124, 58, 237, 0.5);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #94a3b8;
+    white-space: pre;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  /* ---- Terminal window ---- */
+  .terminal {
+    background: #070d18;
+    border: 1px solid #1e2940;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    background: #0d1525;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 1px solid #1e2940;
+  }
+
+  .terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ---- How It Works steps ---- */
+  .how-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.18);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a855f7;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ---- Demo line animation ---- */
+  .demo-line {
+    opacity: 0;
+  }
+  .demo-line.in-view {
+    animation: fadeInLine 0.4s ease forwards;
+  }
+
+  @keyframes fadeInLine {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ---- Cursor blink ---- */
+  .cursor::after {
+    content: '█';
+    animation: blink 1s step-end infinite;
+    color: #2dd4bf;
+    font-size: 0.8em;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* ---- Fade/slide animations ---- */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in  { animation: fadeIn  0.8s ease-out both; }
+  .animate-slide-up { animation: slideUp 0.8s ease-out both; }
+
+  /* ---- Scrollbar ---- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0f1729; }
+  ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
+</style>
