@@ -10,7 +10,7 @@
   <meta name="description" content="The CLI that gives AI coding agents memory, specs, and code review. Day 30 agents know what they learned on Day 1." />
   <meta property="og:title" content="Fellowship — Your AI Agents Remember Everything" />
   <meta property="og:description" content="The CLI that gives AI coding agents memory, specs, and code review. Day 30 agents know what they learned on Day 1." />
-  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -29,30 +29,24 @@
     <!-- ===== HERO ===== -->
     <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-20 pb-24 text-center">
       
-      <!-- Logo — BIG, with glow, blended into bg -->
-      <div class="mb-8 relative animate-fade-in">
-        <div class="absolute inset-0 scale-150 bg-purple-600/20 rounded-full blur-[80px]"></div>
+      <!-- Logo SVG — clean, scalable, no background issues -->
+      <div class="mb-10 relative animate-fade-in">
+        <div class="absolute inset-0 scale-[2] bg-purple-600/15 rounded-full blur-[60px]"></div>
         <img
-          src="/logo.png"
+          src="/logo.svg"
           alt="Fellowship"
-          width="180"
-          height="180"
-          class="relative mx-auto drop-shadow-[0_0_60px_rgba(124,58,237,0.5)] rounded-3xl"
-          style="mix-blend-mode: lighten;"
+          width="160"
+          height="160"
+          class="relative mx-auto drop-shadow-[0_0_40px_rgba(124,58,237,0.4)]"
         />
       </div>
 
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm mb-10 font-mono animate-fade-in" style="animation-delay:0.15s">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Open Source · MIT Licensed
-      </div>
-
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.05] animate-slide-up" style="animation-delay:0.2s">
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.05] animate-slide-up" style="animation-delay:0.15s">
         Your AI Agents<br/>
         <span class="gradient-text-hero">Remember Everything.</span>
       </h1>
 
-      <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mb-14 leading-relaxed animate-slide-up" style="animation-delay:0.35s">
+      <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mb-14 leading-relaxed animate-slide-up" style="animation-delay:0.3s">
         Fellowship gives coding agents <strong class="text-white">persistent memory</strong>, 
         <strong class="text-white">auto-generated specs</strong>, and 
         <strong class="text-white">code review</strong>.<br class="hidden md:block"/>
@@ -60,7 +54,7 @@
       </p>
 
       <!-- Install CTA -->
-      <div class="w-full max-w-xl mb-8 animate-slide-up" style="animation-delay:0.5s">
+      <div class="w-full max-w-xl mb-8 animate-slide-up" style="animation-delay:0.45s">
         <div class="terminal-cta group">
           <div class="flex items-center gap-3 flex-1 min-w-0">
             <span class="text-emerald-400 font-mono font-semibold select-none flex-shrink-0">$</span>
@@ -72,17 +66,9 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-6 animate-slide-up" style="animation-delay:0.6s">
-        <a href="https://github.com/MiniGalaxyMage/fellowship" target="_blank" rel="noopener"
-          class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition text-sm font-medium">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          Star on GitHub
-        </a>
-        <span class="text-slate-700">·</span>
-        <a href="#features" class="text-slate-400 hover:text-white transition text-sm font-medium">
-          See features ↓
-        </a>
-      </div>
+      <a href="#features" class="text-slate-500 hover:text-slate-300 transition text-sm font-medium animate-slide-up" style="animation-delay:0.55s">
+        See what makes it different ↓
+      </a>
     </section>
 
     <!-- ===== THE PROBLEM ===== -->
@@ -97,17 +83,29 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div class="pain-card">
-            <div class="text-2xl mb-3">🧠</div>
+            <div class="pain-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-red-400/70">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
             <p class="text-slate-300 font-semibold mb-2">Amnesia</p>
             <p class="text-slate-500 text-sm leading-relaxed">Every run starts from zero. Your agent makes the same mistakes it made yesterday.</p>
           </div>
           <div class="pain-card">
-            <div class="text-2xl mb-3">🎯</div>
+            <div class="pain-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-red-400/70">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </div>
             <p class="text-slate-300 font-semibold mb-2">No plan</p>
             <p class="text-slate-500 text-sm leading-relaxed">You say "add auth" and pray. No spec, no criteria, no way to verify the output.</p>
           </div>
           <div class="pain-card">
-            <div class="text-2xl mb-3">👁️</div>
+            <div class="pain-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-red-400/70">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </div>
             <p class="text-slate-300 font-semibold mb-2">No review</p>
             <p class="text-slate-500 text-sm leading-relaxed">Code goes straight to your branch. No second pair of eyes. No quality gate.</p>
           </div>
@@ -121,7 +119,7 @@
       <div class="max-w-5xl mx-auto relative">
         
         <div class="text-center mb-16">
-          <p class="text-emerald-400 text-xs uppercase tracking-[0.25em] mb-4 font-mono font-semibold">The killer feature</p>
+          <p class="text-emerald-400 text-xs uppercase tracking-[0.25em] mb-4 font-mono font-semibold">What makes Fellowship different</p>
           <h2 class="text-4xl md:text-6xl font-black mb-6">
             Agents that <span class="gradient-text-hero">learn</span>.
           </h2>
@@ -144,14 +142,15 @@
             </div>
             <div class="p-5 font-mono text-xs leading-relaxed space-y-1">
               <div><span class="text-cyan-400">$</span> <span class="text-slate-400">fellowship run "add API endpoint"</span></div>
-              <div class="text-slate-600">&nbsp;</div>
-              <div><span class="text-yellow-300">📋</span> <span class="text-slate-400">Spec generated</span></div>
-              <div><span class="text-yellow-300">🤖</span> <span class="text-slate-400">Writing code...</span></div>
-              <div><span class="text-emerald-400">✅</span> <span class="text-slate-300">Done</span></div>
-              <div><span class="text-yellow-300">💡</span> <span class="text-amber-300">Learned: "Use bcrypt rounds ≥ 12"</span></div>
-              <div><span class="text-yellow-300">💡</span> <span class="text-amber-300">Learned: "Always validate JWT server-side"</span></div>
-              <div class="text-slate-600">&nbsp;</div>
-              <div class="text-slate-600 italic">memory: 2 learnings saved</div>
+              <div class="text-slate-800">&nbsp;</div>
+              <div><span class="text-slate-500">spec generated</span></div>
+              <div><span class="text-slate-500">writing code...</span></div>
+              <div><span class="text-emerald-400">done</span></div>
+              <div class="text-slate-800">&nbsp;</div>
+              <div><span class="text-amber-400/80">learned →</span> <span class="text-slate-400">"Use bcrypt rounds ≥ 12"</span></div>
+              <div><span class="text-amber-400/80">learned →</span> <span class="text-slate-400">"Validate JWT server-side"</span></div>
+              <div class="text-slate-800">&nbsp;</div>
+              <div class="text-slate-600 text-[11px]">memory: 2 learnings saved</div>
             </div>
           </div>
 
@@ -165,13 +164,14 @@
             </div>
             <div class="p-5 font-mono text-xs leading-relaxed space-y-1">
               <div><span class="text-cyan-400">$</span> <span class="text-slate-400">fellowship run "add payment system"</span></div>
-              <div class="text-slate-600">&nbsp;</div>
-              <div><span class="text-yellow-300">📋</span> <span class="text-slate-400">Spec generated with <span class="text-emerald-400 font-semibold">47 learnings</span></span></div>
-              <div><span class="text-purple-400">🔍</span> <span class="text-slate-400">Retrieved: <span class="text-purple-300">"Always use decimal for money"</span></span></div>
-              <div><span class="text-purple-400">🔍</span> <span class="text-slate-400">Retrieved: <span class="text-purple-300">"Validate webhook signatures"</span></span></div>
-              <div><span class="text-purple-400">🔍</span> <span class="text-slate-400">Retrieved: <span class="text-purple-300">"Idempotency keys on all charges"</span></span></div>
-              <div><span class="text-yellow-300">🤖</span> <span class="text-slate-400">Writing code <span class="text-slate-600">(already knows your patterns)</span></span></div>
-              <div><span class="text-emerald-400">✅</span> <span class="text-emerald-300 font-semibold">Zero mistakes. First try.</span></div>
+              <div class="text-slate-800">&nbsp;</div>
+              <div><span class="text-slate-400">spec generated with <span class="text-emerald-400 font-semibold">47 learnings</span></span></div>
+              <div><span class="text-purple-400">retrieved →</span> <span class="text-purple-300">"Always use decimal for money"</span></div>
+              <div><span class="text-purple-400">retrieved →</span> <span class="text-purple-300">"Validate webhook signatures"</span></div>
+              <div><span class="text-purple-400">retrieved →</span> <span class="text-purple-300">"Idempotency keys on all charges"</span></div>
+              <div class="text-slate-800">&nbsp;</div>
+              <div><span class="text-slate-500">writing code</span> <span class="text-slate-600">(already knows your patterns)</span></div>
+              <div><span class="text-emerald-400 font-semibold">zero mistakes. first try.</span></div>
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@
     <section class="py-28 px-6">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold mb-4">Everything you need.</h2>
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">The full pipeline.</h2>
           <p class="text-slate-400 text-lg">From planning to shipping. One CLI.</p>
         </div>
 
@@ -195,80 +195,88 @@
           <!-- Spec-First -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-purple-500/15 border border-purple-500/30 flex items-center justify-center">
-                <span class="text-lg">📋</span>
+              <div class="feature-icon-box purple">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
               </div>
               <h3 class="text-lg font-bold">Spec-First Runs</h3>
             </div>
             <p class="text-slate-400 text-sm mb-5 leading-relaxed">
-              Every task auto-generates a spec with acceptance criteria from your codebase context. No more "just wing it" coding.
+              Every task auto-generates a spec with acceptance criteria from your codebase context. The agent implements against the spec, not vibes.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship run "add user roles" --review-spec
 
-<span class="text-yellow-300">📋</span> Spec: <span class="text-purple-300">002-user-roles.md</span>
-   <span class="text-slate-500">8 acceptance criteria</span>
-   <span class="text-slate-500">3 gotchas applied</span>
+  spec: <span class="text-purple-300">002-user-roles.md</span>
+  <span class="text-slate-500">8 acceptance criteria</span>
+  <span class="text-slate-500">3 gotchas applied from memory</span>
    
-<span class="text-cyan-400">?</span> Review spec before implementation? <span class="text-emerald-400">[Y/n]</span></div>
+  review spec before implementation? <span class="text-emerald-400">[Y/n]</span></div>
           </div>
 
           <!-- Writer-Reviewer -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center">
-                <span class="text-lg">🔍</span>
+              <div class="feature-icon-box cyan">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                </svg>
               </div>
-              <h3 class="text-lg font-bold">Writer-Reviewer Pattern</h3>
+              <h3 class="text-lg font-bold">Writer-Reviewer</h3>
             </div>
             <p class="text-slate-400 text-sm mb-5 leading-relaxed">
-              One agent writes, another reviews against the spec. Automated quality gates — with human override via <code class="text-purple-300">--review</code>.
+              One agent writes, another reviews against the spec. Automated quality gates with human override via <code class="text-purple-300 text-xs">--review</code>.
             </p>
-            <div class="code-snippet"><span class="text-yellow-300">🤖</span> Writer <span class="text-slate-600">(sonnet)</span> implementing...
-<span class="text-yellow-300">🔍</span> Reviewer <span class="text-slate-600">(opus)</span> checking...
+            <div class="code-snippet">  writer <span class="text-slate-600">(sonnet)</span> implementing...
+  reviewer <span class="text-slate-600">(opus)</span> checking criteria...
 
-<span class="text-emerald-400">✅</span> 8/8 criteria met
-<span class="text-yellow-300">📝</span> Scribe updated CHANGELOG.md
-<span class="text-emerald-400">🚀</span> <span class="text-emerald-300">Ready to push!</span></div>
+  <span class="text-emerald-400">8/8 criteria met</span>
+  scribe updated CHANGELOG.md
+  <span class="text-emerald-300">ready to push</span></div>
           </div>
 
           <!-- Hire -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center">
-                <span class="text-lg">🧙‍♂️</span>
+              <div class="feature-icon-box amber">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
               </div>
               <h3 class="text-lg font-bold">Hire Your Team</h3>
             </div>
             <p class="text-slate-400 text-sm mb-5 leading-relaxed">
-              Build your agent team through conversation. Define roles, models, and behaviors — Fellowship creates the config.
+              Build your agent team through conversation. Define roles, models, specialties. Fellowship writes the config.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship hire
 
-<span class="text-purple-400">🧙</span> What role? <span class="text-white">backend engineer</span>
-<span class="text-purple-400">🧙</span> Which model? <span class="text-white">claude-sonnet</span>
-<span class="text-purple-400">🧙</span> Specialties? <span class="text-white">APIs, databases</span>
+  what role? <span class="text-white">backend engineer</span>
+  which model? <span class="text-white">claude-sonnet</span>
+  specialties? <span class="text-white">APIs, databases, auth</span>
 
-<span class="text-emerald-400">✅</span> Added <span class="text-purple-300">forge</span> to team.yaml</div>
+  added <span class="text-purple-300">forge</span> to team.yaml</div>
           </div>
 
           <!-- Scribe -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
-                <span class="text-lg">📝</span>
+              <div class="feature-icon-box emerald">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
               </div>
               <h3 class="text-lg font-bold">Auto Documentation</h3>
             </div>
             <p class="text-slate-400 text-sm mb-5 leading-relaxed">
-              The Scribe agent updates your CHANGELOG, README, and API docs after every run. Documentation that never goes stale.
+              The Scribe agent updates your CHANGELOG, README, and API docs after every run. Documentation that writes itself.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship run "add payments" --scribe
 
-<span class="text-slate-500">...</span>
-<span class="text-yellow-300">📝</span> Scribe: updated CHANGELOG.md
-<span class="text-yellow-300">📝</span> Scribe: updated docs/api.md
-<span class="text-yellow-300">📝</span> Scribe: updated README.md
-<span class="text-emerald-400">✅</span> <span class="text-slate-400">3 docs updated automatically</span></div>
+  <span class="text-slate-500">...</span>
+  scribe: updated CHANGELOG.md
+  scribe: updated docs/api.md
+  scribe: updated README.md
+  <span class="text-slate-400">3 docs updated automatically</span></div>
           </div>
 
         </div>
@@ -288,7 +296,7 @@
             <div class="terminal-dot" style="background:#ff5f57"></div>
             <div class="terminal-dot" style="background:#ffbd2e"></div>
             <div class="terminal-dot" style="background:#28c840"></div>
-            <span class="ml-3 text-slate-500 text-xs font-mono">fellowship commands</span>
+            <span class="ml-3 text-slate-500 text-xs font-mono">fellowship --help</span>
           </div>
           <div class="p-6 md:p-8 font-mono text-sm space-y-5">
             <div class="cmd-row">
@@ -297,11 +305,11 @@
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship adopt</code>
-              <span class="text-slate-600">Add to an existing repo</span>
+              <span class="text-slate-600">Add Fellowship to an existing repo</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship hire</code>
-              <span class="text-slate-600">Build your agent team</span>
+              <span class="text-slate-600">Build your agent team interactively</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship run <span class="text-purple-300">"task"</span></code>
@@ -309,7 +317,7 @@
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship run <span class="text-purple-300">"task"</span> --review</code>
-              <span class="text-slate-600">Human-in-the-loop diff review</span>
+              <span class="text-slate-600">Human-in-the-loop diff approval</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship spec <span class="text-purple-300">"task"</span></code>
@@ -317,15 +325,15 @@
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship search <span class="text-purple-300">"query"</span></code>
-              <span class="text-slate-600">Search project learnings</span>
+              <span class="text-slate-600">Search project learnings and gotchas</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship scribe</code>
-              <span class="text-slate-600">Generate docs from current code</span>
+              <span class="text-slate-600">Auto-generate docs from current code</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship status</code>
-              <span class="text-slate-600">Dashboard of recent runs</span>
+              <span class="text-slate-600">Dashboard of runs, learnings, agents</span>
             </div>
           </div>
         </div>
@@ -345,7 +353,7 @@
           One install. Zero config. Agents that actually remember.
         </p>
 
-        <div class="w-full max-w-xl mx-auto mb-10">
+        <div class="w-full max-w-xl mx-auto mb-16">
           <div class="terminal-cta">
             <div class="flex items-center gap-3 flex-1 min-w-0">
               <span class="text-emerald-400 font-mono font-semibold select-none flex-shrink-0">$</span>
@@ -357,16 +365,8 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-center gap-6 mb-16">
-          <a href="https://github.com/MiniGalaxyMage/fellowship" target="_blank" rel="noopener"
-            class="gh-btn">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            ⭐ Star on GitHub
-          </a>
-        </div>
-
         <p class="text-slate-700 text-sm">
-          Open source · MIT Licensed · Works with Claude Code, Codex, and any CLI agent
+          Works with Claude Code, Codex, and any CLI-based coding agent.
         </p>
       </div>
     </section>
@@ -400,7 +400,6 @@
     background-size: 64px 64px;
   }
 
-  /* ---- Gradients ---- */
   .gradient-text-hero {
     background: linear-gradient(135deg, #a855f7 0%, #7c3aed 30%, #2dd4bf 100%);
     -webkit-background-clip: text;
@@ -437,12 +436,17 @@
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 12px; padding: 24px;
-    text-align: left;
-    transition: all 0.3s;
+    text-align: left; transition: all 0.3s;
   }
   .pain-card:hover {
-    background: rgba(239,68,68,0.04);
-    border-color: rgba(239,68,68,0.15);
+    background: rgba(239,68,68,0.03);
+    border-color: rgba(239,68,68,0.12);
+  }
+  .pain-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
   }
 
   /* ---- Feature cards ---- */
@@ -458,11 +462,19 @@
     transform: translateY(-2px);
     box-shadow: 0 12px 40px rgba(124,58,237,0.1);
   }
+  .feature-icon-box {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feature-icon-box.purple { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25); color: #a78bfa; }
+  .feature-icon-box.cyan { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.25); color: #5eead4; }
+  .feature-icon-box.amber { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); color: #fbbf24; }
+  .feature-icon-box.emerald { background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); color: #6ee7b7; }
 
   .code-snippet {
     background: #060b17;
     border: 1px solid rgba(255,255,255,0.06);
-    border-left: 3px solid rgba(124,58,237,0.5);
+    border-left: 3px solid rgba(124,58,237,0.4);
     border-radius: 10px; padding: 16px 18px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11.5px; color: #94a3b8;
@@ -496,20 +508,6 @@
   }
   .cmd-row:last-child { border-bottom: none; }
   .cmd-row code { min-width: 300px; }
-
-  /* ---- GitHub button ---- */
-  .gh-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 24px; border-radius: 10px;
-    background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.35);
-    color: #c4b5fd; font-size: 14px; font-weight: 600;
-    transition: all 0.2s; text-decoration: none;
-  }
-  .gh-btn:hover {
-    background: rgba(124,58,237,0.25); border-color: rgba(124,58,237,0.5);
-    color: white; transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(124,58,237,0.2);
-  }
 
   /* ---- Animations ---- */
   @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }

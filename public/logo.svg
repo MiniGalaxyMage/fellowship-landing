@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="hat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="50%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="hat-light" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="band-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4c1d95"/>
+      <stop offset="50%" stop-color="#5b21b6"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="brim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <filter id="cursor-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="hat-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#4c1d95" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <!-- Hat body (cone) -->
+  <g filter="url(#hat-shadow)">
+    <!-- Main hat cone -->
+    <path d="M256 52 L148 340 L364 340 Z" fill="url(#hat-grad)"/>
+    <!-- Light reflection on hat -->
+    <path d="M256 52 L195 340 L148 340 Z" fill="url(#hat-light)"/>
+    
+    <!-- Hat band -->
+    <rect x="138" y="320" width="236" height="40" rx="4" fill="url(#band-grad)"/>
+    
+    <!-- Brim -->
+    <ellipse cx="256" cy="360" rx="190" ry="36" fill="url(#brim-grad)"/>
+    <!-- Brim top edge highlight -->
+    <ellipse cx="256" cy="356" rx="186" ry="30" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  
+  <!-- Terminal cursor >_ on the band -->
+  <g filter="url(#cursor-glow)">
+    <text x="200" y="349" font-family="monospace" font-weight="bold" font-size="32" fill="#2dd4bf">
+      &gt;_
+    </text>
+  </g>
+  
+  <!-- Star sparkle on hat tip -->
+  <g opacity="0.8">
+    <circle cx="256" cy="52" r="3" fill="#e9d5ff"/>
+    <line x1="256" y1="40" x2="256" y2="64" stroke="#e9d5ff" stroke-width="1.5" opacity="0.6"/>
+    <line x1="244" y1="52" x2="268" y2="52" stroke="#e9d5ff" stroke-width="1.5" opacity="0.6"/>
+  </g>
+</svg>
