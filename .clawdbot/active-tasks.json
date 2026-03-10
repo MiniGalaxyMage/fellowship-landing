@@ -1,0 +1,18 @@
+[
+    {
+        "id": "feat/landing",
+        "agent": "claude-code",
+        "model": "claude-sonnet-4-6",
+        "description": " Spec: Fellowship Landing Page",
+        "repo": "fellowship-landing",
+        "worktree": "/Users/galaxymage/DEV/FDD/fellowship-landing-worktrees/feat/landing",
+        "branch": "feat/landing",
+        "promptFile": "/Users/galaxymage/DEV/FDD/fellowship-landing/SPEC.md",
+        "startedAt": 1773141468000,
+        "status": "running",
+        "retries": 0,
+        "maxRetries": 3,
+        "notifyOnComplete": true,
+        "backlogFile": ""
+    }
+]
