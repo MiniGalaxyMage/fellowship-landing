@@ -32,13 +32,16 @@
       <!-- Logo -->
       <div class="mb-10 relative animate-fade-in">
         <div class="absolute inset-0 scale-[2.5] bg-purple-600/20 rounded-full blur-[80px]"></div>
-        <img
-          src="/logo.png"
-          alt="Fellowship"
-          width="200"
-          height="200"
-          class="relative mx-auto drop-shadow-[0_0_50px_rgba(124,58,237,0.5)]"
-        />
+        <div class="relative mx-auto w-[200px] h-[200px] logo-blend">
+          <img
+            src="/logo.png"
+            alt="Fellowship"
+            width="200"
+            height="200"
+            class="w-full h-full drop-shadow-[0_0_50px_rgba(124,58,237,0.5)]"
+          />
+          <div class="logo-edge-fade"></div>
+        </div>
       </div>
 
       <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.05] animate-slide-up" style="animation-delay:0.15s">
@@ -493,6 +496,18 @@
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* Logo edge fade — blends logo bg into page bg */
+  .logo-blend { position: relative; }
+  .logo-edge-fade {
+    position: absolute; inset: 0;
+    background: radial-gradient(
+      ellipse 65% 65% at center,
+      transparent 45%,
+      #0a0f1e 80%
+    );
+    pointer-events: none;
+  }
 
   .glow-border-purple {
     border-color: rgba(124,58,237,0.3);
