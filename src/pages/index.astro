@@ -29,21 +29,22 @@
     <!-- ===== HERO ===== -->
     <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-20 pb-24 text-center">
       
-      <!-- Logo -->
-      <div class="mb-10 relative animate-fade-in">
-        <div class="absolute inset-0 scale-[2.5] bg-purple-600/20 rounded-full blur-[80px]"></div>
-        <img
-          src="/logo.png"
-          alt="Fellowship"
-          width="200"
-          height="200"
-          class="relative mx-auto drop-shadow-[0_0_50px_rgba(124,58,237,0.5)]"
-        />
+      <!-- Logo + Title grouped -->
+      <div class="flex flex-col items-center gap-0 animate-fade-in mb-2">
+        <div class="relative -mb-6">
+          <div class="absolute inset-0 scale-[2.5] bg-purple-600/20 rounded-full blur-[80px]"></div>
+          <img
+            src="/logo.png"
+            alt="Fellowship"
+            width="120"
+            height="120"
+            class="relative mx-auto drop-shadow-[0_0_50px_rgba(124,58,237,0.5)] logo-tilted w-[100px] md:w-[160px] lg:w-[200px] h-auto"
+          />
+        </div>
+        <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight animate-slide-up gradient-text-hero" style="animation-delay:0.1s">
+          Fellowship
+        </h1>
       </div>
-
-      <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight mb-4 animate-slide-up gradient-text-hero" style="animation-delay:0.1s">
-        Fellowship
-      </h1>
 
       <p class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-8 leading-tight text-slate-300 animate-slide-up" style="animation-delay:0.18s">
         Your AI Agents <span class="text-white">Remember Everything.</span>
@@ -236,7 +237,54 @@
   <span class="text-emerald-300">ready to push</span></div>
           </div>
 
-          <!-- Hire -->
+          <!-- Interactive TUI -->
+          <div class="feature-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="feature-icon-box amber">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Interactive TUI</h3>
+            </div>
+            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+              Full terminal dashboard. Browse run history, side-by-side diffs, learnings, decisions, and agent stats. Navigate with vim keys.
+            </p>
+            <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship
+
+  <span class="text-white">Fellowship v0.4.5</span>
+
+  <span class="text-cyan-400">></span> <span class="text-white">Run a task</span>
+    Status
+    Memory
+    Doctor
+    Search
+
+  <span class="text-slate-500">jk navigate  Enter select  q quit</span></div>
+          </div>
+
+          <!-- Decision Memory -->
+          <div class="feature-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="feature-icon-box emerald">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Decision Memory</h3>
+            </div>
+            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+              Every architectural decision is captured, categorized, and stored in SQLite. When generating specs, only relevant decisions are retrieved via LLM filtering.
+            </p>
+            <div class="code-snippet">  <span class="text-slate-500">categories:</span>
+  <span class="text-purple-300">architecture</span> <span class="text-cyan-300">backend</span> <span class="text-emerald-300">frontend</span> <span class="text-amber-300">devops</span>
+  <span class="text-pink-300">convention</span> <span class="text-blue-300">design</span> <span class="text-red-300">bugfix</span> <span class="text-slate-400">other</span>
+
+  <span class="text-slate-500">run #12 →</span> <span class="text-white">"Use bcrypt rounds >= 12"</span>
+  <span class="text-slate-500">run #15 →</span> <span class="text-white">"Decimal for money, never float"</span></div>
+          </div>
+
+          <!-- Hire with Role Boundaries -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
               <div class="feature-icon-box amber">
@@ -244,24 +292,24 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
               </div>
-              <h3 class="text-lg font-bold">Hire Your Team</h3>
+              <h3 class="text-lg font-bold">Role-Based Agents</h3>
             </div>
             <p class="text-slate-400 text-sm mb-5 leading-relaxed">
-              Build your agent team through conversation. Define roles, models, specialties. Fellowship writes the config.
+              6 built-in role templates with non-negotiable boundaries. Backend agents can't touch frontend. DevOps agents can't modify app logic. Hard constraints, not suggestions.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship hire
 
   what role? <span class="text-white">backend engineer</span>
-  which model? <span class="text-white">claude-sonnet</span>
-  specialties? <span class="text-white">APIs, databases, auth</span>
-
-  added <span class="text-purple-300">forge</span> to team.yaml</div>
+  <span class="text-slate-500">scope:</span> APIs, databases, auth
+  <span class="text-red-400">must not:</span> modify frontend components
+  <span class="text-red-400">must not:</span> change CSS or UI layouts
+  <span class="text-emerald-400">owns:</span> src/api, src/services, src/models</div>
           </div>
 
           <!-- Scribe -->
           <div class="feature-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="feature-icon-box emerald">
+              <div class="feature-icon-box purple">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                 </svg>
@@ -302,15 +350,15 @@
           <div class="p-6 md:p-8 font-mono text-sm space-y-5">
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship init</code>
-              <span class="text-slate-600">Set up a new project</span>
+              <span class="text-slate-600">Set up a new project from scratch</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship adopt</code>
-              <span class="text-slate-600">Add Fellowship to an existing repo</span>
+              <span class="text-slate-600">Add Fellowship to an existing codebase</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship hire</code>
-              <span class="text-slate-600">Build your agent team interactively</span>
+              <span class="text-slate-600">Build your agent team with role boundaries</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship run <span class="text-purple-300">"task"</span></code>
@@ -325,16 +373,24 @@
               <span class="text-slate-600">Generate spec without implementing</span>
             </div>
             <div class="cmd-row">
+              <code class="text-cyan-400">fellowship memory</code>
+              <span class="text-slate-600">Browse runs, diffs, learnings, decisions</span>
+            </div>
+            <div class="cmd-row">
               <code class="text-cyan-400">fellowship search <span class="text-purple-300">"query"</span></code>
-              <span class="text-slate-600">Search project learnings and gotchas</span>
+              <span class="text-slate-600">Full-text search across all project memory</span>
+            </div>
+            <div class="cmd-row">
+              <code class="text-cyan-400">fellowship status</code>
+              <span class="text-slate-600">Interactive dashboard with agent stats</span>
+            </div>
+            <div class="cmd-row">
+              <code class="text-cyan-400">fellowship doctor</code>
+              <span class="text-slate-600">Health check with 13-point diagnostic</span>
             </div>
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship scribe</code>
               <span class="text-slate-600">Auto-generate docs from current code</span>
-            </div>
-            <div class="cmd-row">
-              <code class="text-cyan-400">fellowship status</code>
-              <span class="text-slate-600">Dashboard of runs, learnings, agents</span>
             </div>
           </div>
         </div>
@@ -558,6 +614,14 @@
   .cmd-row code { min-width: 300px; }
 
   /* ---- Animations ---- */
+  .logo-tilted {
+    transform: rotate(12deg);
+    transition: transform 0.3s ease;
+  }
+  .logo-tilted:hover {
+    transform: rotate(5deg) scale(1.05);
+  }
+
   @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
   @keyframes slideUp { from { opacity:0; transform:translateY(28px) } to { opacity:1; transform:translateY(0) } }
   .animate-fade-in { animation: fadeIn 0.8s ease-out both; }
