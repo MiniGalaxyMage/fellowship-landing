@@ -221,6 +221,59 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <li><strong>Custom</strong> &mdash; any shell command with env vars</li>
     </ul>
 
+    <h3 id="telegram-setup">Setting up Telegram notifications</h3>
+    <p>Step-by-step guide to get Fellowship notifications in Telegram:</p>
+
+    <h4>1. Create a bot</h4>
+    <ul>
+      <li>Open <a href="https://t.me/BotFather" target="_blank" class="text-purple-400 hover:text-purple-300">@BotFather</a> in Telegram</li>
+      <li>Send <code>/newbot</code></li>
+      <li>Choose a name (e.g. "Fellowship Notifications")</li>
+      <li>Choose a username (e.g. <code>my_fellowship_bot</code>)</li>
+      <li>BotFather will give you a token like <code>123456789:ABCdefGHIjklMNOpqrsTUVwxyz</code></li>
+    </ul>
+
+    <h4>2. Get your chat ID</h4>
+    <ul>
+      <li>Open <a href="https://t.me/userinfobot" target="_blank" class="text-purple-400 hover:text-purple-300">@userinfobot</a> in Telegram</li>
+      <li>Send <code>/start</code> &mdash; it will reply with your ID (a number like <code>1726726015</code>)</li>
+    </ul>
+
+    <h4>3. Start your bot</h4>
+    <ul>
+      <li>Search for your bot in Telegram by its username</li>
+      <li>Press <strong>Start</strong> &mdash; this is required, otherwise the bot can't send you messages</li>
+    </ul>
+
+    <h4>4. Configure Fellowship</h4>
+    <p>Add to your <code>.fellowship/config.yaml</code>:</p>
+
+    <div class="config-block">
+      <pre><code><span class="key">hooks:</span>
+  <span class="key">onComplete:</span>
+    - <span class="punct">{</span> <span class="key">notify:</span> <span class="value">telegram</span> <span class="punct">}</span>
+  <span class="key">onError:</span>
+    - <span class="punct">{</span> <span class="key">notify:</span> <span class="value">telegram</span> <span class="punct">}</span>
+
+<span class="key">telegramBotToken:</span> <span class="string">"YOUR_BOT_TOKEN"</span>
+<span class="key">telegramChatId:</span> <span class="string">"YOUR_CHAT_ID"</span></code></pre>
+    </div>
+
+    <p>Or use environment variables instead:</p>
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="terminal-dot" style="background:#ff5f57"></div>
+        <div class="terminal-dot" style="background:#ffbd2e"></div>
+        <div class="terminal-dot" style="background:#28c840"></div>
+      </div>
+      <div class="p-5 font-mono text-xs leading-relaxed">
+        <div><span class="text-cyan-400">export</span> FELLOWSHIP_TELEGRAM_BOT_TOKEN=<span class="text-yellow-300">"your-token"</span></div>
+        <div><span class="text-cyan-400">export</span> FELLOWSHIP_TELEGRAM_CHAT_ID=<span class="text-yellow-300">"your-chat-id"</span></div>
+      </div>
+    </div>
+
+    <p class="mt-4">You'll now receive a Telegram message every time a run completes or fails, with the task name, agent, duration, and status.</p>
+
     <!-- ============ TEAM.YAML ============ -->
     <h2 id="team-yaml">team.yaml</h2>
     <p>Defines your agent team. Generated automatically during <code>init</code> or <code>adopt</code>, and extended with <code>fellowship hire</code>.</p>
