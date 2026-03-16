@@ -213,13 +213,60 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </tbody>
     </table>
 
-    <h3>Notification Providers</h3>
-    <ul>
-      <li><strong>Desktop</strong> &mdash; native OS notifications (zero config)</li>
-      <li><strong>Telegram</strong> &mdash; set bot token + chat ID in config or env vars</li>
-      <li><strong>Slack</strong> &mdash; set webhook URL in <code>FELLOWSHIP_SLACK_WEBHOOK</code> env var</li>
-      <li><strong>Custom</strong> &mdash; any shell command with env vars</li>
-    </ul>
+    <h3>Hook Actions</h3>
+    <p>Each hook event accepts a list of actions. You can mix and match:</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Syntax</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sound</td><td><code>{ sound: done }</code></td><td>Play a system sound (<code>done</code>, <code>error</code>, <code>review</code>)</td></tr>
+        <tr><td>Desktop</td><td><code>{ notify: desktop }</code></td><td>Native OS notification (zero config)</td></tr>
+        <tr><td>Telegram</td><td><code>{ notify: telegram }</code></td><td>Message to Telegram (requires bot token + chat ID)</td></tr>
+        <tr><td>Slack</td><td><code>{ notify: slack }</code></td><td>Message to Slack webhook (set <code>FELLOWSHIP_SLACK_WEBHOOK</code> env var)</td></tr>
+        <tr><td>Custom command</td><td><code>"your shell command"</code></td><td>Run any shell command with environment variables</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Environment Variables in Custom Hooks</h3>
+    <p>When using custom shell commands, these variables are available:</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Content</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>FELLOWSHIP_TASK</code></td><td>Task description</td><td><code>add user authentication</code></td></tr>
+        <tr><td><code>FELLOWSHIP_STATUS</code></td><td>Run result</td><td><code>completed</code> / <code>failed</code> / <code>rejected</code></td></tr>
+        <tr><td><code>FELLOWSHIP_AGENT</code></td><td>Agent name</td><td><code>forge</code></td></tr>
+        <tr><td><code>FELLOWSHIP_BRANCH</code></td><td>Branch created</td><td><code>feat/add-user-auth</code></td></tr>
+        <tr><td><code>FELLOWSHIP_DURATION</code></td><td>Duration in seconds</td><td><code>180</code></td></tr>
+        <tr><td><code>FELLOWSHIP_TOKENS</code></td><td>Tokens consumed</td><td><code>15420</code></td></tr>
+        <tr><td><code>FELLOWSHIP_COST</code></td><td>Cost in USD</td><td><code>0.04</code></td></tr>
+        <tr><td><code>FELLOWSHIP_PR_URL</code></td><td>Pull request URL</td><td><code>https://github.com/.../pull/5</code></td></tr>
+      </tbody>
+    </table>
+
+    <h4>Custom hook examples</h4>
+    <div class="config-block">
+      <pre><code><span class="key">hooks:</span>
+  <span class="key">onComplete:</span>
+    <span class="comment"># Log to a file</span>
+    - <span class="string">"echo '$FELLOWSHIP_TASK completed in ${FELLOWSHIP_DURATION}s' >> ~/fellowship.log"</span>
+    <span class="comment"># Call a webhook</span>
+    - <span class="string">"curl -X POST https://your-api.com/webhook -d '{\"task\": \"$FELLOWSHIP_TASK\", \"status\": \"$FELLOWSHIP_STATUS\"}'"</span>
+    <span class="comment"># Send a Discord notification</span>
+    - <span class="string">"curl -H 'Content-Type: application/json' -d '{\"content\": \"Fellowship: $FELLOWSHIP_TASK — $FELLOWSHIP_STATUS\"}' $DISCORD_WEBHOOK_URL"</span></code></pre>
+    </div>
 
     <h3 id="telegram-setup">Setting up Telegram notifications</h3>
     <p>Step-by-step guide to get Fellowship notifications in Telegram:</p>
@@ -250,13 +297,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
     <div class="config-block">
       <pre><code><span class="key">hooks:</span>
+  <span class="key">telegramBotToken:</span> <span class="string">"YOUR_BOT_TOKEN"</span>
+  <span class="key">telegramChatId:</span> <span class="string">"YOUR_CHAT_ID"</span>
   <span class="key">onComplete:</span>
     - <span class="punct">{</span> <span class="key">notify:</span> <span class="value">telegram</span> <span class="punct">}</span>
   <span class="key">onError:</span>
     - <span class="punct">{</span> <span class="key">notify:</span> <span class="value">telegram</span> <span class="punct">}</span>
-
-<span class="key">telegramBotToken:</span> <span class="string">"YOUR_BOT_TOKEN"</span>
-<span class="key">telegramChatId:</span> <span class="string">"YOUR_CHAT_ID"</span></code></pre>
+  <span class="key">onReview:</span>
+    - <span class="punct">{</span> <span class="key">notify:</span> <span class="value">telegram</span> <span class="punct">}</span></code></pre>
     </div>
 
     <p>Or use environment variables instead:</p>
