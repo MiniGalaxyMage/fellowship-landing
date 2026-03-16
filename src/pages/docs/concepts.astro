@@ -1,0 +1,323 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Concepts"
+  description="How Fellowship works — memory system, spec-first workflow, agents, Sentinel, background runs, and notifications."
+  activeNav="concepts"
+>
+  <div class="docs-content">
+    <h1>Concepts</h1>
+    <p class="subtitle">How Fellowship orchestrates AI agents with memory, specs, and code review.</p>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <h2>How It Works</h2>
+    <p>When you run a task, Fellowship orchestrates a full pipeline:</p>
+
+    <div class="flow-diagram"><span class="highlight">You:</span> fellowship run "add search endpoint"
+                    │
+                    ▼
+           ┌──────────────┐
+           │  <span class="accent">Spec Engine</span>  │ ← Generates detailed spec from task + learnings + gotchas
+           └──────┬───────┘
+                  │
+                  ▼
+           ┌──────────────┐
+           │  <span class="accent">Agent (Code)</span> │ ← Claude Code writes code in isolated worktree
+           └──────┬───────┘
+                  │
+                  ▼
+           ┌──────────────┐
+           │  <span class="accent">🛡️ Sentinel</span>  │ ← AI reviewer checks code against spec
+           └──────┬───────┘
+                  │
+                  ▼
+           ┌──────────────┐
+           │ <span class="accent">Human Review</span>  │ ← You: accept, reject, or give feedback
+           └──────┬───────┘
+                  │
+                  ▼
+           ┌──────────────┐
+           │ <span class="accent">Learn & Push</span>  │ ← Extracts learnings, pushes branch, creates PR
+           └──────────────┘</div>
+
+    <div class="callout callout-info">
+      <strong>Key detail:</strong> Your working directory never changes. Fellowship creates an isolated git worktree for each run &mdash; you stay on your branch the whole time.
+    </div>
+
+    <!-- ============ MEMORY SYSTEM ============ -->
+    <h2>The Memory System</h2>
+    <p>Fellowship maintains a persistent memory that grows with every run. This is what makes Day 30 runs better than Day 1.</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Purpose</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>learnings.md</code></td>
+          <td>Raw lessons from each run</td>
+          <td>After every run</td>
+        </tr>
+        <tr>
+          <td><code>learnings-distilled.md</code></td>
+          <td>Consolidated top learnings (max 30)</td>
+          <td>After every run</td>
+        </tr>
+        <tr>
+          <td><code>gotchas.md</code></td>
+          <td>Technical pitfalls and warnings</td>
+          <td>After every run</td>
+        </tr>
+        <tr>
+          <td><code>architecture.md</code></td>
+          <td>Project architecture reference</td>
+          <td>On init/adopt</td>
+        </tr>
+        <tr>
+          <td><code>fellowship.db</code></td>
+          <td>Runs, decisions, tasks, events (SQLite + FTS5)</td>
+          <td>Continuously</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>How Memory Improves Runs</h3>
+    <ol>
+      <li>Before generating a spec, Fellowship searches learnings via FTS5</li>
+      <li>Relevant learnings + all gotchas are injected as context</li>
+      <li>The spec includes a <code>## Context Considered</code> section showing exactly what was used</li>
+      <li>After each run, new learnings are extracted and distilled</li>
+    </ol>
+
+    <!-- ============ SPEC-FIRST ============ -->
+    <h2>Spec-First Workflow</h2>
+    <p>Every task gets a detailed spec before any code is written. The spec engine takes your task description and combines it with:</p>
+    <ul>
+      <li><strong>Project architecture</strong> &mdash; from <code>architecture.md</code></li>
+      <li><strong>Past learnings</strong> &mdash; full-text searched via FTS5 for relevance</li>
+      <li><strong>Gotchas</strong> &mdash; all known pitfalls injected as warnings</li>
+      <li><strong>Agent profile</strong> &mdash; role-specific guidelines and conventions</li>
+    </ul>
+
+    <p>This means the agent starts with a complete picture &mdash; not just your one-liner task description. You can preview any spec before running it:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Preview the spec without executing</span>
+<span class="cmd">fellowship</span> run <span class="string">"add WebSocket support"</span> <span class="flag">--dry-run</span>
+
+<span class="comment"># Or generate just the spec file</span>
+<span class="cmd">fellowship</span> spec <span class="string">"add WebSocket support"</span></code></pre>
+    </div>
+
+    <!-- ============ AGENTS & ROLES ============ -->
+    <h2>Agents &amp; Roles</h2>
+    <p>Fellowship creates a team of specialized agents, each with a role, profile, and memory. Agents are defined in <code>.fellowship/team.yaml</code> and have individual profile files in <code>.fellowship/profiles/</code>.</p>
+
+    <p>A typical team might include:</p>
+    <ul>
+      <li><strong>Carlos</strong> (Backend) &mdash; handles API endpoints, business logic, database queries</li>
+      <li><strong>Atlas</strong> (Database) &mdash; schema design, migrations, query optimization</li>
+      <li><strong>Merl&iacute;n</strong> (Coordinator) &mdash; project-level decisions and planning</li>
+      <li><strong>Sentinel</strong> (Reviewer) &mdash; code review on every run</li>
+    </ul>
+
+    <p>Fellowship automatically selects the right agent for each task based on the agent&rsquo;s role and the task description. You can also add new agents with <code>fellowship hire</code>.</p>
+
+    <!-- ============ WRITER-REVIEWER ============ -->
+    <h2>Writer-Reviewer Pattern</h2>
+    <p>Fellowship uses a writer-reviewer pattern for every run. The coding agent (writer) implements the task, then Sentinel (reviewer) checks the code against the spec.</p>
+
+    <p>This creates a feedback loop:</p>
+    <ol>
+      <li><strong>Writer</strong> implements the code based on the spec</li>
+      <li><strong>Sentinel</strong> reviews against acceptance criteria, catches bugs and edge cases</li>
+      <li>If issues found, the writer gets feedback and fixes them</li>
+      <li>Cycle repeats up to <code>maxCycles</code> (default: 2)</li>
+      <li>After passing review, changes go to human review (if <code>--review</code> flag used)</li>
+    </ol>
+
+    <!-- ============ SENTINEL ============ -->
+    <h2>Sentinel &mdash; The Built-in Reviewer</h2>
+    <p>Every project gets <strong>Sentinel</strong>, a dedicated AI code reviewer. Unlike using another coding agent as reviewer, Sentinel has a specialized profile focused on:</p>
+
+    <ul>
+      <li>Verifying acceptance criteria from the spec</li>
+      <li>Catching bugs and missing edge cases</li>
+      <li>Checking architecture compliance</li>
+      <li><strong>Not</strong> nitpicking style or suggesting rewrites</li>
+    </ul>
+
+    <p>Sentinel reviews every run automatically. Configure via <code>review:</code> in <a href="/docs/configuration">config.yaml</a>.</p>
+
+    <!-- ============ BACKGROUND RUNS ============ -->
+    <h2>Background Runs</h2>
+    <p>Background runs let the agent work while you keep coding. Your terminal stays free &mdash; no waiting around.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Start a background run</span>
+<span class="cmd">fellowship</span> run <span class="string">"add authentication"</span> <span class="flag">--bg</span>
+
+<span class="comment"># Check on it any time</span>
+<span class="cmd">fellowship</span> status
+<span class="cmd">fellowship</span> log <span class="flag">--follow</span>
+
+<span class="comment"># Review when notified</span>
+<span class="cmd">fellowship</span> review</code></pre>
+    </div>
+
+    <p>The agent works in an isolated git worktree, so there&rsquo;s zero risk of conflicts with your current work. When it finishes, you get a notification.</p>
+
+    <!-- ============ NOTIFICATIONS ============ -->
+    <h2>Notifications</h2>
+    <p>Fellowship notifies you when runs complete &mdash; zero config required.</p>
+
+    <h3>Built-in (automatic)</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Sounds</th>
+          <th>Desktop Notifications</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>macOS</strong></td>
+          <td><code>afplay</code> (Glass, Basso, Ping)</td>
+          <td><code>osascript</code> (native alerts)</td>
+        </tr>
+        <tr>
+          <td><strong>Linux</strong></td>
+          <td><code>paplay</code> / <code>aplay</code></td>
+          <td><code>notify-send</code></td>
+        </tr>
+        <tr>
+          <td><strong>Windows</strong></td>
+          <td>PowerShell <code>SoundPlayer</code></td>
+          <td>PowerShell toast (Win10/11)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Plus: <strong>terminal flash</strong> &mdash; colored bar on completion (green / red / yellow / blue).</p>
+
+    <h3>Additional Providers</h3>
+    <ul>
+      <li><strong>Telegram</strong> &mdash; set bot token + chat ID in config or env vars</li>
+      <li><strong>Slack</strong> &mdash; set webhook URL in <code>FELLOWSHIP_SLACK_WEBHOOK</code> env var</li>
+      <li><strong>Custom</strong> &mdash; any shell command with env vars</li>
+    </ul>
+
+    <h3>Environment Variables in Hooks</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>FELLOWSHIP_TASK</code></td><td>"add user authentication"</td></tr>
+        <tr><td><code>FELLOWSHIP_AGENT</code></td><td>"Carlos"</td></tr>
+        <tr><td><code>FELLOWSHIP_STATUS</code></td><td>completed / failed / rejected</td></tr>
+        <tr><td><code>FELLOWSHIP_BRANCH</code></td><td>feat/add-user-auth</td></tr>
+        <tr><td><code>FELLOWSHIP_DURATION</code></td><td>145 (seconds)</td></tr>
+        <tr><td><code>FELLOWSHIP_TOKENS</code></td><td>31000</td></tr>
+        <tr><td><code>FELLOWSHIP_COST</code></td><td>0.47</td></tr>
+        <tr><td><code>FELLOWSHIP_PR_URL</code></td><td>https://github.com/.../pull/5</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ SECURITY ============ -->
+    <h2>Security</h2>
+    <p>Fellowship includes prompt injection protection:</p>
+
+    <ul>
+      <li><strong>30+ detection patterns</strong> &mdash; XML tags, ChatML tokens, role markers, identity overrides, authority markers</li>
+      <li><strong>Sanitization on every run</strong> &mdash; Learnings, gotchas, and architecture scanned before injection</li>
+      <li><code>fellowship sanitize</code> &mdash; Manual scan with severity levels</li>
+      <li><strong>Dry-run reports</strong> &mdash; <code>--dry-run</code> shows sanitization results before committing to a run</li>
+      <li><strong>strictMode</strong> &mdash; Optional throw-on-detection for zero-tolerance environments</li>
+    </ul>
+
+    <!-- ============ SKILLS SYSTEM ============ -->
+    <h2>Skills System</h2>
+    <p>Fellowship ships with built-in skills and supports project-level overrides:</p>
+
+    <div class="config-block">
+      <pre><code><span class="key">fellowship/skills/</span>          <span class="comment">← Built-in (shipped with CLI)</span>
+  <span class="value">code-review.md</span>            <span class="comment">← Sentinel's review guidelines</span>
+
+<span class="key">.fellowship/skills/</span>         <span class="comment">← Project overrides (optional)</span>
+  <span class="value">code-review.md</span>            <span class="comment">← Your custom review guidelines</span></code></pre>
+    </div>
+
+    <p>Project skills override built-in skills with the same name. Profiles reference skills with <code>{"{{skill:name}}"}</code>.</p>
+
+    <!-- ============ PLATFORM SUPPORT ============ -->
+    <h2>Platform Support</h2>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>macOS</th>
+          <th>Linux</th>
+          <th>Windows</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Core CLI</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+        <tr><td>Sounds</td><td><code>afplay</code></td><td><code>paplay</code>/<code>aplay</code></td><td>PowerShell</td></tr>
+        <tr><td>Desktop notifications</td><td><code>osascript</code></td><td><code>notify-send</code></td><td>PowerShell toast</td></tr>
+        <tr><td>Terminal flash</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+        <tr><td>Keychain credentials</td><td>macOS Keychain</td><td><code>libsecret</code></td><td>Credential Store</td></tr>
+        <tr><td>Background runs</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Supported Providers</h2>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Agent CLI</th>
+          <th>Model</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Anthropic</td><td>Claude Code</td><td>claude-sonnet-4-6, claude-opus-4-6</td></tr>
+        <tr><td>OpenAI</td><td>Codex</td><td>gpt-4o, o3-mini</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Page navigation -->
+    <div class="flex justify-between mt-16 pt-8 border-t border-white/[0.06]">
+      <a href="/docs/commands" class="docs-nav-link">
+        <span class="label">Previous</span>
+        <span class="title">&larr; Commands</span>
+      </a>
+      <a href="/docs/configuration" class="docs-nav-link text-right">
+        <span class="label">Next</span>
+        <span class="title">Configuration &rarr;</span>
+      </a>
+    </div>
+  </div>
+</DocsLayout>
