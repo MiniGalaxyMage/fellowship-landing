@@ -1,0 +1,157 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Getting Started"
+  description="Install Fellowship and start building with AI agents that remember everything."
+  activeNav="getting-started"
+>
+  <div class="docs-content">
+    <h1>Getting Started</h1>
+    <p class="subtitle">Install Fellowship, initialize your project, and run your first AI-powered task in under 2 minutes.</p>
+
+    <h2>What is Fellowship?</h2>
+    <p>Fellowship is a CLI that turns AI coding agents into a team that learns. It orchestrates the full cycle: <strong>spec &rarr; code &rarr; review &rarr; learn &rarr; improve</strong> &mdash; so each run makes the next one better.</p>
+    <p>Works with <strong>Claude Code</strong>, <strong>Codex</strong>, and any CLI-based AI coding agent.</p>
+
+    <div class="callout callout-info">
+      <strong>Why Fellowship?</strong> AI coding agents are powerful but stateless. Every session starts from zero &mdash; they forget past decisions, repeat mistakes, and ignore project conventions. Fellowship fixes this with persistent memory, auto-generated specs, and built-in code review.
+    </div>
+
+    <h2>Installation</h2>
+    <p>Install Fellowship globally via npm:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">npm</span> install <span class="flag">-g</span> fellowship-cli</code></pre>
+    </div>
+
+    <h3>Requirements</h3>
+    <ul>
+      <li><strong>Node.js</strong> &ge; 18</li>
+      <li><strong>Git</strong> installed and configured</li>
+      <li>A supported AI coding agent CLI (<code>claude</code> or <code>codex</code>)</li>
+    </ul>
+
+    <p>Run <code>fellowship doctor</code> after installation to verify everything is set up correctly.</p>
+
+    <h2>New Project</h2>
+    <p>Start a brand new project with Fellowship from scratch:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Create project directory</span>
+<span class="cmd">mkdir</span> my-api <span class="cmd">&&</span> <span class="cmd">cd</span> my-api <span class="cmd">&&</span> <span class="cmd">git</span> init
+
+<span class="comment"># Initialize Fellowship</span>
+<span class="cmd">fellowship</span> init</code></pre>
+    </div>
+
+    <p>The <code>init</code> wizard will analyze your description, generate architecture, create an AI agent team, and scaffold the project. It creates:</p>
+
+    <ul>
+      <li><code>.fellowship/config.yaml</code> &mdash; Project config (provider, model, settings)</li>
+      <li><code>.fellowship/team.yaml</code> &mdash; Agent definitions (roles, skills, profiles)</li>
+      <li><code>.fellowship/profiles/</code> &mdash; Agent profiles with coding guidelines</li>
+      <li><code>.fellowship/architecture.md</code> &mdash; Project architecture reference</li>
+      <li><code>.fellowship/fellowship.db</code> &mdash; SQLite database (runs, decisions, learnings)</li>
+    </ul>
+
+    <h2>Existing Project</h2>
+    <p>Add Fellowship to a project that already has code:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">cd</span> my-existing-project
+
+<span class="comment"># Analyze codebase and set up Fellowship</span>
+<span class="cmd">fellowship</span> adopt</code></pre>
+    </div>
+
+    <p>The <code>adopt</code> command detects your stack, framework, and patterns, then generates a team tailored to your project.</p>
+
+    <h2>Running Your First Task</h2>
+    <p>Once initialized, run a task with a natural language description:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Run a task</span>
+<span class="cmd">fellowship</span> run <span class="string">"add user authentication with JWT"</span>
+
+<span class="comment"># Run in background with human review</span>
+<span class="cmd">fellowship</span> run <span class="string">"add rate limiting"</span> <span class="flag">--bg</span> <span class="flag">--review</span>
+<span class="comment"># → You keep working → 🔊 notification → fellowship review</span></code></pre>
+    </div>
+
+    <div class="callout callout-purple">
+      <strong>How it works:</strong> Fellowship generates a detailed spec from your task description, assigns an agent, executes the work in an isolated git worktree (your working directory never changes), runs AI code review, and extracts learnings for future runs.
+    </div>
+
+    <h2>Verify Your Setup</h2>
+    <p>Run the doctor command to check everything is working:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> doctor
+
+<span class="output">⚔️  Fellowship Doctor
+
+  ✅ Node.js v25.6.1  (&gt;= 18)
+  ✅ Git 2.47.0
+  ✅ Agent CLI  (claude)
+  ✅ .fellowship/ directory
+  ✅ config.yaml  (anthropic / claude-sonnet-4-6)
+  ✅ team.yaml  (4 agents)
+  ✅ API key  (configured for anthropic)
+  ✅ Sentinel reviewer  (profile present)
+  ✅ fellowship.db
+  ✅ .gitignore  (covers fellowship.db)
+  ⚠️  Learnings  (none yet — run some tasks first)
+  ⚠️  Gotchas  (none yet)
+  ✅ architecture.md
+
+  All checks passed (11 ✅, 2 ⚠️, 0 ❌)</span></code></pre>
+    </div>
+
+    <h2>Next Steps</h2>
+    <ul>
+      <li>Learn all available <a href="/docs/commands">commands</a></li>
+      <li>Understand <a href="/docs/concepts">how Fellowship works</a> under the hood</li>
+      <li>Customize your <a href="/docs/configuration">configuration</a></li>
+    </ul>
+
+    <!-- Page navigation -->
+    <div class="flex justify-end mt-16 pt-8 border-t border-white/[0.06]">
+      <a href="/docs/commands" class="docs-nav-link">
+        <span class="label">Next</span>
+        <span class="title">Commands &rarr;</span>
+      </a>
+    </div>
+  </div>
+</DocsLayout>

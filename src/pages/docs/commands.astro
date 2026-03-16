@@ -1,0 +1,392 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Commands"
+  description="Complete reference for all Fellowship CLI commands — init, adopt, run, review, status, and more."
+  activeNav="commands"
+>
+  <div class="docs-content">
+    <h1>Commands Reference</h1>
+    <p class="subtitle">Every Fellowship CLI command with usage, flags, and examples.</p>
+
+    <!-- ============ INIT ============ -->
+    <h2 id="init"><code>fellowship init</code></h2>
+    <p>Interactive wizard that sets up Fellowship in a new project. Analyzes your description, generates architecture, creates an AI agent team, and scaffolds the project.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> init</code></pre>
+    </div>
+
+    <p>Creates the following in your project:</p>
+    <ul>
+      <li><code>.fellowship/config.yaml</code> &mdash; Project config (provider, model, settings)</li>
+      <li><code>.fellowship/team.yaml</code> &mdash; Agent definitions (roles, skills, profiles)</li>
+      <li><code>.fellowship/profiles/</code> &mdash; Agent profiles with coding guidelines</li>
+      <li><code>.fellowship/architecture.md</code> &mdash; Project architecture reference</li>
+      <li><code>.fellowship/fellowship.db</code> &mdash; SQLite database (runs, decisions, learnings)</li>
+      <li><code>.gitignore</code> &mdash; Auto-generated for your stack</li>
+    </ul>
+
+    <!-- ============ ADOPT ============ -->
+    <h2 id="adopt"><code>fellowship adopt</code></h2>
+    <p>Adds Fellowship to an existing project by analyzing the codebase. Detects stack, framework, patterns, and generates a team tailored to your project.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">cd</span> existing-project
+<span class="cmd">fellowship</span> adopt</code></pre>
+    </div>
+
+    <!-- ============ RUN ============ -->
+    <h2 id="run"><code>fellowship run</code></h2>
+    <p>The core command. Generates a spec, assigns an agent, executes the task, reviews the code, and extracts learnings.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Basic run</span>
+<span class="cmd">fellowship</span> run <span class="string">"add pagination to GET /users"</span>
+
+<span class="comment"># With human review (accept/reject/feedback)</span>
+<span class="cmd">fellowship</span> run <span class="string">"refactor auth middleware"</span> <span class="flag">--review</span>
+
+<span class="comment"># Run in background — free your terminal</span>
+<span class="cmd">fellowship</span> run <span class="string">"add search endpoint"</span> <span class="flag">--bg</span>
+
+<span class="comment"># Background + human review</span>
+<span class="cmd">fellowship</span> run <span class="string">"add auth"</span> <span class="flag">--bg</span> <span class="flag">--review</span>
+
+<span class="comment"># Preview what would happen (no code changes)</span>
+<span class="cmd">fellowship</span> run <span class="string">"add search endpoint"</span> <span class="flag">--dry-run</span>
+
+<span class="comment"># Skip AI review</span>
+<span class="cmd">fellowship</span> run <span class="string">"fix typo in README"</span> <span class="flag">--no-review</span>
+
+<span class="comment"># Use a pre-written spec</span>
+<span class="cmd">fellowship</span> run <span class="flag">--spec</span> path/to/spec.md</code></pre>
+    </div>
+
+    <h3>Options</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Flag</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--bg</code></td><td>Run in background &mdash; free your terminal, get notified when done</td></tr>
+        <tr><td><code>--review</code></td><td>Pause for human review after implementation</td></tr>
+        <tr><td><code>--dry-run</code></td><td>Generate spec and show preview, no code changes</td></tr>
+        <tr><td><code>--no-review</code></td><td>Skip the Sentinel AI review cycle</td></tr>
+        <tr><td><code>--no-sanitize</code></td><td>Disable prompt injection sanitization</td></tr>
+        <tr><td><code>--spec &lt;path&gt;</code></td><td>Use an existing spec instead of generating one</td></tr>
+        <tr><td><code>--scribe</code></td><td>Force documentation generation after run</td></tr>
+        <tr><td><code>--no-scribe</code></td><td>Skip documentation generation</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ RUN --BG ============ -->
+    <h2 id="run-bg"><code>fellowship run --bg</code></h2>
+    <p>Run in background &mdash; your terminal stays free while the agent works.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> run <span class="string">"add user authentication"</span> <span class="flag">--bg</span>
+
+<span class="output">⚔️  Fellowship — running in background
+   Task:    add user authentication
+   PID:     45231
+   Log:     .fellowship/runs/run-1.log
+
+   fellowship log              ← view agent output
+   fellowship log --follow     ← stream in real time
+   fellowship status           ← check progress
+
+You'll hear a sound when it's done 🔊</span></code></pre>
+    </div>
+
+    <p>When the run completes: sound + desktop notification + terminal flash. Use <code>fellowship log</code> to check output or <code>fellowship review</code> to accept/reject changes.</p>
+
+    <!-- ============ LOG ============ -->
+    <h2 id="log"><code>fellowship log</code></h2>
+    <p>View the output log of a background run.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> log                <span class="comment"># latest run</span>
+<span class="cmd">fellowship</span> log <span class="flag">--follow</span>       <span class="comment"># stream in real time (tail -f)</span>
+<span class="cmd">fellowship</span> log <span class="flag">--run</span> 3        <span class="comment"># specific run number</span></code></pre>
+    </div>
+
+    <!-- ============ REVIEW ============ -->
+    <h2 id="review"><code>fellowship review</code></h2>
+    <p>Review changes from a background run. Accept or reject with full diff display.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> review
+<span class="comment"># Shows diff, spec, stats</span>
+<span class="comment"># [a]ccept  [r]eject  [d]iff  [s]pec</span></code></pre>
+    </div>
+
+    <!-- ============ HIRE ============ -->
+    <h2 id="hire"><code>fellowship hire</code></h2>
+    <p>Add a new agent to your team through an AI conversation.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> hire</code></pre>
+    </div>
+
+    <!-- ============ SPEC ============ -->
+    <h2 id="spec"><code>fellowship spec</code></h2>
+    <p>Generate a spec without running it. Useful for reviewing specs before execution.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> spec <span class="string">"add WebSocket support for real-time updates"</span></code></pre>
+    </div>
+
+    <!-- ============ SEARCH ============ -->
+    <h2 id="search"><code>fellowship search</code></h2>
+    <p>Search learnings and gotchas using FTS5 full-text search.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> search <span class="string">"authentication"</span></code></pre>
+    </div>
+
+    <!-- ============ STATUS ============ -->
+    <h2 id="status"><code>fellowship status</code></h2>
+    <p>Dashboard showing your team, recent runs, costs, and project stats.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> status
+
+<span class="output">⚔️  Fellowship v0.4.2 — my-api
+   Provider: anthropic (claude-sonnet-4-6)
+
+👥 Team (4 agents)
+   ⚙️  Carlos — Backend development
+   🗄️  Atlas — Database design and management
+   🎯  Merlín — Project coordination
+   🛡️  Sentinel — Code reviewer
+
+📊 Recent Runs
+   #   Task                          Agent    Status     Duration  Cost
+   3   add rate limiting             Carlos   ✅ done    2m 15s   $0.31
+   2   add CORS config               Carlos   ✅ done    1m 54s   $0.24
+   1   scaffold project              Carlos   ✅ done    2m 50s   $0.67
+
+📈 Summary
+   Runs: 3 total (3 completed, 0 failed)
+   Tokens: 892,411 (~$0.82)
+   Learnings: 5 bullets (distilled)
+   Decisions: 8 in DB</span></code></pre>
+    </div>
+
+    <!-- ============ DOCTOR ============ -->
+    <h2 id="doctor"><code>fellowship doctor</code></h2>
+    <p>Check your setup for issues. Verifies Node, Git, agent CLI, API key, config, team, Sentinel, learnings, and more. Zero LLM calls.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> doctor
+
+<span class="output">⚔️  Fellowship Doctor
+
+  ✅ Node.js v25.6.1  (&gt;= 18)
+  ✅ Git 2.47.0
+  ✅ Agent CLI  (claude)
+  ✅ .fellowship/ directory
+  ✅ config.yaml  (anthropic / claude-sonnet-4-6)
+  ✅ team.yaml  (4 agents)
+  ✅ API key  (configured for anthropic)
+  ✅ Sentinel reviewer  (profile present)
+  ✅ fellowship.db
+  ✅ .gitignore  (covers fellowship.db)
+  ⚠️  Learnings  (none yet — run some tasks first)
+  ⚠️  Gotchas  (none yet)
+  ✅ architecture.md
+
+  All checks passed (11 ✅, 2 ⚠️, 0 ❌)</span></code></pre>
+    </div>
+
+    <!-- ============ MEMORY ============ -->
+    <h2 id="memory"><code>fellowship memory</code></h2>
+    <p>Interactive TUI with four views: Dashboard, Runs, Memory, and Diff.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> memory                      <span class="comment"># Opens on dashboard</span>
+<span class="cmd">fellowship</span> mem                         <span class="comment"># Alias</span>
+<span class="cmd">fellowship</span> memory <span class="flag">--view</span> runs          <span class="comment"># Jump to runs table</span>
+<span class="cmd">fellowship</span> memory <span class="flag">--view</span> memory <span class="flag">--section</span> gotchas
+<span class="cmd">fellowship</span> memory <span class="flag">--view</span> diff          <span class="comment"># Side-by-side diff</span>
+<span class="cmd">fellowship</span> memory <span class="flag">--view</span> diff <span class="flag">--diff</span> main
+<span class="cmd">fellowship</span> memory <span class="flag">--search</span> <span class="string">"database"</span>  <span class="comment"># Pre-filter entries</span></code></pre>
+    </div>
+
+    <h3>Views</h3>
+    <ul>
+      <li><strong>Dashboard</strong> &mdash; stats overview: total runs, tokens, cost, team, last run</li>
+      <li><strong>Runs</strong> &mdash; full run history table with agent, status, review, tokens, cost, duration</li>
+      <li><strong>Memory</strong> &mdash; browse learnings, gotchas, decisions, reviews (4 sub-tabs)</li>
+      <li><strong>Diff</strong> &mdash; side-by-side diff view with add/remove coloring</li>
+    </ul>
+
+    <h3>Keyboard Navigation</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>1-4</code></td><td>Jump to view</td></tr>
+        <tr><td><code>Tab</code></td><td>Cycle views</td></tr>
+        <tr><td><code>&uarr;&darr;</code> / <code>jk</code></td><td>Navigate</td></tr>
+        <tr><td><code>h</code> / <code>l</code></td><td>Switch memory tabs</td></tr>
+        <tr><td><code>Enter</code></td><td>Expand item</td></tr>
+        <tr><td><code>/</code></td><td>Search</td></tr>
+        <tr><td><code>u</code> / <code>d</code></td><td>Page scroll (diff)</td></tr>
+        <tr><td><code>q</code></td><td>Quit</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ LEARN ============ -->
+    <h2 id="learn"><code>fellowship learn</code></h2>
+    <p>Manually add a learning to the project memory.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> learn <span class="string">"Always use parameterized queries — never string interpolation for SQL"</span></code></pre>
+    </div>
+
+    <!-- ============ SCRIBE ============ -->
+    <h2 id="scribe"><code>fellowship scribe</code></h2>
+    <p>Generate or update project documentation (README, API docs, changelog).</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> scribe <span class="flag">--readme</span>
+<span class="cmd">fellowship</span> scribe <span class="flag">--api</span>
+<span class="cmd">fellowship</span> scribe <span class="flag">--all</span></code></pre>
+    </div>
+
+    <!-- ============ CONNECT ============ -->
+    <h2 id="connect"><code>fellowship connect</code></h2>
+    <p>Configure your AI provider credentials (stored securely in macOS Keychain / system credential store).</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> connect</code></pre>
+    </div>
+
+    <!-- ============ SANITIZE ============ -->
+    <h2 id="sanitize"><code>fellowship sanitize</code></h2>
+    <p>Scan <code>.fellowship/</code> files for prompt injection attempts.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> sanitize</code></pre>
+    </div>
+
+    <!-- Page navigation -->
+    <div class="flex justify-between mt-16 pt-8 border-t border-white/[0.06]">
+      <a href="/docs" class="docs-nav-link">
+        <span class="label">Previous</span>
+        <span class="title">&larr; Getting Started</span>
+      </a>
+      <a href="/docs/concepts" class="docs-nav-link text-right">
+        <span class="label">Next</span>
+        <span class="title">Concepts &rarr;</span>
+      </a>
+    </div>
+  </div>
+</DocsLayout>
