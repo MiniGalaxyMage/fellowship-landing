@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from '../components/ThemeToggle.astro';
+
 interface Props {
   title: string;
   description: string;
@@ -28,34 +30,44 @@ const navItems = [
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var t = localStorage.getItem('theme') || 'system';
+      var d = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (d) document.documentElement.classList.add('dark');
+    })();
+  </script>
 </head>
-<body class="bg-[#0a0f1e] text-white font-sans antialiased">
+<body class="bg-white dark:bg-[#0a0f1e] text-[#1a1a2e] dark:text-white font-sans antialiased">
 
   <!-- Background effects -->
-  <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+  <div class="fixed inset-0 pointer-events-none z-0 opacity-0 dark:opacity-100 transition-opacity duration-300" aria-hidden="true">
     <div class="docs-grid"></div>
     <div class="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-purple-600/5 rounded-full blur-[150px]"></div>
   </div>
 
   <!-- Mobile header -->
-  <header class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#0a0f1e]/95 backdrop-blur-md border-b border-white/[0.06]">
+  <header class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#0a0f1e]/95 backdrop-blur-md border-b border-slate-200 dark:border-white/[0.06]">
     <div class="flex items-center justify-between px-4 h-14">
       <a href="/" class="flex items-center gap-2.5">
         <img src="/logo.png" alt="Fellowship" class="w-7 h-7" />
-        <span class="font-semibold text-sm text-white/90">Fellowship <span class="text-purple-400 font-medium">Docs</span></span>
+        <span class="font-semibold text-sm text-slate-900/90 dark:text-white/90">Fellowship <span class="text-purple-400 font-medium">Docs</span></span>
       </a>
-      <button
-        id="mobile-menu-btn"
-        class="flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 text-slate-400 hover:text-white hover:border-white/20 transition-colors"
-        aria-label="Toggle navigation"
-      >
-        <svg id="menu-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <svg id="close-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <div class="flex items-center gap-2">
+        <ThemeToggle />
+        <button
+          id="mobile-menu-btn"
+          class="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 dark:border-white/10 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:border-slate-300 dark:hover:border-white/20 transition-colors"
+          aria-label="Toggle navigation"
+        >
+          <svg id="menu-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -65,14 +77,15 @@ const navItems = [
   <!-- Sidebar -->
   <aside
     id="sidebar"
-    class="fixed top-0 left-0 z-40 h-screen w-[272px] bg-[#0a0f1e]/98 backdrop-blur-xl border-r border-white/[0.06] flex flex-col -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out"
+    class="fixed top-0 left-0 z-40 h-screen w-[272px] bg-white/98 dark:bg-[#0a0f1e]/98 backdrop-blur-xl border-r border-slate-200 dark:border-white/[0.06] flex flex-col -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out"
   >
     <!-- Logo -->
-    <div class="hidden lg:flex items-center gap-2.5 px-5 h-16 border-b border-white/[0.06] shrink-0">
+    <div class="hidden lg:flex items-center justify-between px-5 h-16 border-b border-slate-200 dark:border-white/[0.06] shrink-0">
       <a href="/" class="flex items-center gap-2.5 group">
         <img src="/logo.png" alt="Fellowship" class="w-7 h-7 group-hover:scale-105 transition-transform" />
-        <span class="font-semibold text-[15px] text-white/90">Fellowship <span class="text-purple-400 font-medium">Docs</span></span>
+        <span class="font-semibold text-[15px] text-slate-900/90 dark:text-white/90">Fellowship <span class="text-purple-400 font-medium">Docs</span></span>
       </a>
+      <ThemeToggle />
     </div>
 
     <!-- Mobile spacer for fixed header -->
@@ -80,7 +93,7 @@ const navItems = [
 
     <!-- Navigation -->
     <nav class="flex-1 overflow-y-auto px-3 py-4">
-      <div class="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-slate-500 px-3 mb-2">Documentation</div>
+      <div class="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-slate-400 dark:text-slate-500 px-3 mb-2">Documentation</div>
       <ul class="space-y-0.5">
         {navItems.map((item) => (
           <li>
@@ -89,13 +102,13 @@ const navItems = [
               class:list={[
                 'flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium transition-all duration-200',
                 activeNav === item.id
-                  ? 'bg-purple-500/10 text-purple-300 border border-purple-500/20'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent',
+                  ? 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/20'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.04] border border-transparent',
               ]}
             >
               <span class:list={[
                 'w-1.5 h-1.5 rounded-full shrink-0 transition-colors',
-                activeNav === item.id ? 'bg-purple-400' : 'bg-slate-600',
+                activeNav === item.id ? 'bg-purple-400' : 'bg-slate-300 dark:bg-slate-600',
               ]} />
               {item.label}
             </a>
@@ -104,17 +117,17 @@ const navItems = [
       </ul>
 
       <!-- External links -->
-      <div class="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-slate-500 px-3 mt-8 mb-2">Links</div>
+      <div class="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-slate-400 dark:text-slate-500 px-3 mt-8 mb-2">Links</div>
       <ul class="space-y-0.5">
         <li>
-          <a href="/" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] transition-all duration-200">
+          <a href="/" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.04] transition-all duration-200">
             <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
             Home
           </a>
         </li>
 
         <li>
-          <a href="https://www.npmjs.com/package/fellowship-cli" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] transition-all duration-200">
+          <a href="https://www.npmjs.com/package/fellowship-cli" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.04] transition-all duration-200">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.664H5.334v-4H3.999v4H1.335V8.667h5.331v5.331zm4 0h-2.666V8.667h2.666v5.331zm12 0h-1.333v-4h-1.334v4h-1.333v-4h-1.334v4h-2.666V8.667h8v5.331z" /></svg>
             npm
           </a>
@@ -123,8 +136,8 @@ const navItems = [
     </nav>
 
     <!-- Version badge -->
-    <div class="px-5 py-3 border-t border-white/[0.06] shrink-0">
-      <span class="text-[11px] text-slate-500 font-mono">fellowship-cli v0.4.5</span>
+    <div class="px-5 py-3 border-t border-slate-200 dark:border-white/[0.06] shrink-0">
+      <span class="text-[11px] text-slate-400 dark:text-slate-500 font-mono">fellowship-cli v0.4.5</span>
     </div>
   </aside>
 
@@ -138,6 +151,15 @@ const navItems = [
   </main>
 
   <style is:global>
+    /* Theme transition */
+    html.theme-transitioning,
+    html.theme-transitioning *,
+    html.theme-transitioning *::before,
+    html.theme-transitioning *::after {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+      transition-delay: 0s !important;
+    }
+
     .docs-grid {
       position: absolute;
       inset: 0;
@@ -430,6 +452,137 @@ const navItems = [
     .flow-diagram .highlight { color: #2dd4bf; }
     .flow-diagram .accent { color: #a78bfa; }
     .flow-diagram .muted { color: #334155; }
+
+    /* Terminal window (used in configuration.astro) */
+    .terminal {
+      background: #060b17;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .terminal-header {
+      background: #0a1020;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    /* ========================================
+       LIGHT MODE OVERRIDES
+       Keep all dark-mode CSS above untouched.
+       These rules only apply when .dark is NOT present.
+       ======================================== */
+
+    html:not(.dark) .docs-content h2 {
+      color: #1e293b;
+      border-bottom-color: #e5e7eb;
+    }
+
+    html:not(.dark) .docs-content h3 {
+      color: #334155;
+    }
+
+    html:not(.dark) .docs-content p {
+      color: #374151;
+    }
+
+    html:not(.dark) .docs-content strong {
+      color: #1e293b;
+    }
+
+    html:not(.dark) .docs-content a {
+      color: #7c3aed;
+      text-decoration-color: rgba(124,58,237,0.3);
+    }
+    html:not(.dark) .docs-content a:hover {
+      text-decoration-color: rgba(124,58,237,0.7);
+    }
+
+    html:not(.dark) .docs-content ul,
+    html:not(.dark) .docs-content ol {
+      color: #374151;
+    }
+
+    html:not(.dark) .docs-content li strong {
+      color: #1e293b;
+    }
+
+    html:not(.dark) .docs-content code:not(pre code) {
+      background: rgba(124,58,237,0.06);
+      border-color: rgba(124,58,237,0.15);
+      color: #7c3aed;
+    }
+
+    html:not(.dark) .docs-content .subtitle {
+      color: #6b7280;
+    }
+
+    /* Tables - light mode */
+    html:not(.dark) .docs-table th {
+      color: #1e293b;
+      background: #f8fafc;
+      border-bottom-color: #e5e7eb;
+    }
+
+    html:not(.dark) .docs-table td {
+      color: #374151;
+      border-bottom-color: #f1f5f9;
+    }
+
+    html:not(.dark) .docs-table td code {
+      background: rgba(124,58,237,0.06);
+      border-color: rgba(124,58,237,0.15);
+      color: #7c3aed;
+    }
+
+    /* Callouts - light mode */
+    html:not(.dark) .callout {
+      color: #374151;
+    }
+
+    html:not(.dark) .callout-info {
+      background: rgba(45,212,191,0.05);
+      border-color: rgba(45,212,191,0.2);
+    }
+
+    html:not(.dark) .callout-info strong { color: #0d9488; }
+
+    html:not(.dark) .callout-purple {
+      background: rgba(124,58,237,0.04);
+      border-color: rgba(124,58,237,0.15);
+    }
+
+    html:not(.dark) .callout-purple strong { color: #7c3aed; }
+
+    /* Navigation links - light mode */
+    html:not(.dark) .docs-nav-link {
+      border-color: #e5e7eb;
+      background: white;
+    }
+
+    html:not(.dark) .docs-nav-link:hover {
+      background: #faf5ff;
+      border-color: rgba(124,58,237,0.2);
+    }
+
+    html:not(.dark) .docs-nav-link .label {
+      color: #6b7280;
+    }
+
+    html:not(.dark) .docs-nav-link .title {
+      color: #7c3aed;
+    }
+
+    /* Scrollbar - light mode */
+    html:not(.dark) ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+    html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 
   <script is:inline>

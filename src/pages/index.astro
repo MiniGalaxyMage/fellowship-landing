@@ -1,4 +1,5 @@
 ---
+import ThemeToggle from '../components/ThemeToggle.astro';
 ---
 
 <!DOCTYPE html>
@@ -14,26 +15,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var t = localStorage.getItem('theme') || 'system';
+      var d = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (d) document.documentElement.classList.add('dark');
+    })();
+  </script>
 </head>
-<body class="bg-[#0a0f1e] text-white font-sans antialiased overflow-x-hidden">
+<body class="bg-white dark:bg-[#0a0f1e] text-[#1a1a2e] dark:text-white font-sans antialiased overflow-x-hidden">
 
   <!-- Background -->
-  <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+  <div class="fixed inset-0 pointer-events-none z-0 opacity-0 dark:opacity-100 transition-opacity duration-300" aria-hidden="true">
     <div class="bg-grid"></div>
     <div class="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-purple-600/8 rounded-full blur-[150px]"></div>
     <div class="absolute bottom-[-100px] right-[-200px] w-[800px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
   </div>
+  <!-- Light mode background -->
+  <div class="fixed inset-0 pointer-events-none z-0 dark:opacity-0 transition-opacity duration-300" aria-hidden="true">
+    <div class="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-purple-200/30 rounded-full blur-[150px]"></div>
+    <div class="absolute bottom-[-100px] right-[-200px] w-[800px] h-[600px] bg-cyan-200/20 rounded-full blur-[120px]"></div>
+  </div>
 
   <!-- ===== NAVBAR ===== -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a0f1e]/80 backdrop-blur-md border-b border-white/5">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0a0f1e]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
     <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
       <a href="/" class="flex items-center gap-2.5 group">
         <img src="/logo.png" alt="Fellowship" width="28" height="28" class="drop-shadow-[0_0_8px_rgba(124,58,237,0.4)] group-hover:scale-105 transition" />
-        <span class="font-bold text-white text-sm tracking-tight">Fellowship</span>
+        <span class="font-bold text-slate-900 dark:text-white text-sm tracking-tight">Fellowship</span>
       </a>
-      <a href="/docs" class="text-slate-400 hover:text-white text-sm font-medium transition">
-        Docs
-      </a>
+      <div class="flex items-center gap-4">
+        <a href="/docs" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium transition">
+          Docs
+        </a>
+        <ThemeToggle />
+      </div>
     </div>
   </nav>
 
@@ -41,7 +57,7 @@
 
     <!-- ===== HERO ===== -->
     <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-20 pb-24 text-center">
-      
+
       <!-- Logo + Title grouped -->
       <div class="flex flex-col items-center gap-0 animate-fade-in mb-2">
         <div class="relative -mb-6">
@@ -59,13 +75,13 @@
         </h1>
       </div>
 
-      <p class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-8 leading-tight text-slate-300 animate-slide-up" style="animation-delay:0.18s">
-        Your AI Agents <span class="text-white">Remember Everything.</span>
+      <p class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-8 leading-tight text-slate-500 dark:text-slate-300 animate-slide-up" style="animation-delay:0.18s">
+        Your AI Agents <span class="text-[#1a1a2e] dark:text-white">Remember Everything.</span>
       </p>
 
-      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mb-14 leading-relaxed animate-slide-up" style="animation-delay:0.3s">
+      <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-3xl mb-14 leading-relaxed animate-slide-up" style="animation-delay:0.3s">
         Persistent memory, auto-generated specs, and code review for coding agents.<br class="hidden md:block"/>
-        <span class="text-slate-500">Day 30 agents know what they learned on day 1.</span>
+        <span class="text-slate-400 dark:text-slate-500">Day 30 agents know what they learned on day 1.</span>
       </p>
 
       <!-- Install CTA -->
@@ -81,7 +97,7 @@
         </div>
       </div>
 
-      <a href="#features" class="text-slate-500 hover:text-slate-300 transition text-sm font-medium animate-slide-up" style="animation-delay:0.55s">
+      <a href="#features" class="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition text-sm font-medium animate-slide-up" style="animation-delay:0.55s">
         See what makes it different ↓
       </a>
     </section>
@@ -89,11 +105,11 @@
     <!-- ===== THE PROBLEM ===== -->
     <section class="py-28 px-6">
       <div class="max-w-4xl mx-auto text-center">
-        <p class="text-slate-600 text-xs uppercase tracking-[0.25em] mb-6 font-mono">The problem with AI coding agents</p>
-        
+        <p class="text-slate-400 dark:text-slate-600 text-xs uppercase tracking-[0.25em] mb-6 font-mono">The problem with AI coding agents</p>
+
         <h2 class="text-3xl md:text-5xl font-bold mb-16 leading-tight">
           Every tool gives you an agent.<br/>
-          <span class="text-slate-500">None of them give it a <em class="gradient-text-hero not-italic">brain</em>.</span>
+          <span class="text-slate-400 dark:text-slate-500">None of them give it a <em class="gradient-text-hero not-italic">brain</em>.</span>
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -103,7 +119,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
-            <p class="text-slate-300 font-semibold mb-2">Amnesia</p>
+            <p class="text-slate-700 dark:text-slate-300 font-semibold mb-2">Amnesia</p>
             <p class="text-slate-500 text-sm leading-relaxed">Every run starts from zero. Your agent makes the same mistakes it made yesterday.</p>
           </div>
           <div class="pain-card">
@@ -112,7 +128,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
               </svg>
             </div>
-            <p class="text-slate-300 font-semibold mb-2">No plan</p>
+            <p class="text-slate-700 dark:text-slate-300 font-semibold mb-2">No plan</p>
             <p class="text-slate-500 text-sm leading-relaxed">You say "add auth" and pray. No spec, no criteria, no way to verify the output.</p>
           </div>
           <div class="pain-card">
@@ -121,7 +137,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
               </svg>
             </div>
-            <p class="text-slate-300 font-semibold mb-2">No review</p>
+            <p class="text-slate-700 dark:text-slate-300 font-semibold mb-2">No review</p>
             <p class="text-slate-500 text-sm leading-relaxed">Code goes straight to your branch. No second pair of eyes. No quality gate.</p>
           </div>
         </div>
@@ -130,23 +146,23 @@
 
     <!-- ===== KILLER FEATURE: MEMORY ===== -->
     <section class="py-28 px-6 relative" id="features">
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-100/40 dark:via-purple-900/5 to-transparent pointer-events-none"></div>
       <div class="max-w-5xl mx-auto relative">
-        
+
         <div class="text-center mb-16">
-          <p class="text-emerald-400 text-xs uppercase tracking-[0.25em] mb-4 font-mono font-semibold">What makes Fellowship different</p>
+          <p class="text-emerald-500 dark:text-emerald-400 text-xs uppercase tracking-[0.25em] mb-4 font-mono font-semibold">What makes Fellowship different</p>
           <h2 class="text-4xl md:text-6xl font-black mb-6">
             Agents that <span class="gradient-text-hero">learn</span>.
           </h2>
-          <p class="text-slate-400 text-xl max-w-2xl mx-auto">
-            Fellowship stores learnings, gotchas, and architecture decisions. 
+          <p class="text-slate-500 dark:text-slate-400 text-xl max-w-2xl mx-auto">
+            Fellowship stores learnings, gotchas, and architecture decisions.
             Every run builds on the last.
           </p>
         </div>
 
         <!-- Day 1 vs Day 30 comparison -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          
+
           <!-- Day 1 -->
           <div class="terminal">
             <div class="terminal-header">
@@ -192,7 +208,7 @@
         </div>
 
         <p class="text-center text-slate-500 text-sm">
-          Same agent. Same codebase. <strong class="text-slate-300">30 days of accumulated wisdom.</strong>
+          Same agent. Same codebase. <strong class="text-slate-700 dark:text-slate-300">30 days of accumulated wisdom.</strong>
         </p>
       </div>
     </section>
@@ -202,7 +218,7 @@
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-5xl font-bold mb-4">The full pipeline.</h2>
-          <p class="text-slate-400 text-lg">From planning to shipping. One CLI.</p>
+          <p class="text-slate-500 dark:text-slate-400 text-lg">From planning to shipping. One CLI.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -217,7 +233,7 @@
               </div>
               <h3 class="text-lg font-bold">Spec-First Runs</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               Every task auto-generates a spec with acceptance criteria from your codebase context. The agent implements against the spec, not vibes.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship run "add user roles" --review-spec
@@ -225,7 +241,7 @@
   spec: <span class="text-purple-300">002-user-roles.md</span>
   <span class="text-slate-500">8 acceptance criteria</span>
   <span class="text-slate-500">3 gotchas applied from memory</span>
-   
+
   review spec before implementation? <span class="text-emerald-400">[Y/n]</span></div>
           </div>
 
@@ -239,7 +255,7 @@
               </div>
               <h3 class="text-lg font-bold">Writer-Reviewer</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               One agent writes, another reviews against the spec. Automated quality gates with human override via <code class="text-purple-300 text-xs">--review</code>.
             </p>
             <div class="code-snippet">  writer <span class="text-slate-600">(sonnet)</span> implementing...
@@ -260,7 +276,7 @@
               </div>
               <h3 class="text-lg font-bold">Interactive TUI</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               Full terminal dashboard. Browse run history, side-by-side diffs, learnings, decisions, and agent stats. Navigate with vim keys.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship
@@ -286,7 +302,7 @@
               </div>
               <h3 class="text-lg font-bold">Decision Memory</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               Every architectural decision is captured, categorized, and stored in SQLite. When generating specs, only relevant decisions are retrieved via LLM filtering.
             </p>
             <div class="code-snippet">  <span class="text-slate-500">categories:</span>
@@ -307,7 +323,7 @@
               </div>
               <h3 class="text-lg font-bold">Role-Based Agents</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               6 built-in role templates with non-negotiable boundaries. Backend agents can't touch frontend. DevOps agents can't modify app logic. Hard constraints, not suggestions.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship hire
@@ -329,7 +345,7 @@
               </div>
               <h3 class="text-lg font-bold">Auto Documentation</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               The Scribe agent updates your CHANGELOG, README, and API docs after every run. Documentation that writes itself.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship run "add payments" --scribe
@@ -351,7 +367,7 @@
               </div>
               <h3 class="text-lg font-bold">Background + Notifications</h3>
             </div>
-            <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
               Launch a task in background, close the terminal, go do something else. Get a Telegram message when it's ready for review. Slack and desktop notifications too.
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship run "add auth" --bg --review
@@ -376,7 +392,7 @@
       <div class="max-w-3xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-5xl font-bold mb-4">Simple commands. Powerful results.</h2>
-          <p class="text-slate-400 text-lg">Everything from setup to shipping.</p>
+          <p class="text-slate-500 dark:text-slate-400 text-lg">Everything from setup to shipping.</p>
         </div>
 
         <div class="terminal shadow-2xl shadow-purple-900/10">
@@ -438,14 +454,14 @@
 
     <!-- ===== FINAL CTA ===== -->
     <section class="py-32 px-6 relative">
-      <div class="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-purple-100/30 dark:from-purple-900/10 to-transparent pointer-events-none"></div>
       <div class="max-w-2xl mx-auto text-center relative">
-        
+
         <h2 class="text-4xl md:text-6xl font-black mb-6">
           Stop prompting.<br/>
           <span class="gradient-text-hero">Start building.</span>
         </h2>
-        <p class="text-slate-400 mb-12 text-lg">
+        <p class="text-slate-500 dark:text-slate-400 mb-12 text-lg">
           One install. Zero config. Agents that actually remember.
         </p>
 
@@ -463,7 +479,7 @@
 
         <!-- Works with -->
         <div class="flex flex-col items-center gap-5 mt-16">
-          <p class="text-slate-600 text-xs uppercase tracking-[0.25em] font-mono">Works with</p>
+          <p class="text-slate-400 dark:text-slate-600 text-xs uppercase tracking-[0.25em] font-mono">Works with</p>
           <div class="flex items-center gap-8 md:gap-12">
             <div class="agent-badge">
               <svg class="w-8 h-8" viewBox="0 0 16 16" fill="currentColor">
@@ -485,7 +501,7 @@
               <span>Ollama</span>
             </div>
           </div>
-          <p class="text-slate-700 text-xs">Any CLI-based coding agent. Cloud or local.</p>
+          <p class="text-slate-500 dark:text-slate-700 text-xs">Any CLI-based coding agent. Cloud or local.</p>
         </div>
       </div>
     </section>
@@ -524,6 +540,15 @@
 <style is:global>
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+
+  /* Theme transition */
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+    transition-delay: 0s !important;
+  }
 
   .bg-grid {
     position: absolute; inset: 0;
@@ -674,4 +699,47 @@
     .cmd-row { flex-direction: column; gap: 4px; }
     .cmd-row code { min-width: auto; }
   }
+
+  /* ========================================
+     LIGHT MODE OVERRIDES
+     Keep all dark-mode CSS above untouched.
+     These rules only apply when .dark is NOT present.
+     ======================================== */
+
+  html:not(.dark) .pain-card {
+    background: white;
+    border-color: #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  html:not(.dark) .pain-card:hover {
+    background: #fef2f2;
+    border-color: rgba(239,68,68,0.2);
+    box-shadow: 0 4px 12px rgba(239,68,68,0.06);
+  }
+  html:not(.dark) .pain-icon {
+    background: rgba(239,68,68,0.06);
+    border-color: rgba(239,68,68,0.12);
+  }
+
+  html:not(.dark) .feature-card {
+    background: white;
+    border-color: #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  html:not(.dark) .feature-card:hover {
+    background: #faf5ff;
+    border-color: rgba(124,58,237,0.25);
+    box-shadow: 0 8px 30px rgba(124,58,237,0.08);
+  }
+
+  html:not(.dark) .feature-icon-box.purple { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.18); }
+  html:not(.dark) .feature-icon-box.cyan { background: rgba(45,212,191,0.08); border-color: rgba(45,212,191,0.18); }
+  html:not(.dark) .feature-icon-box.amber { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.18); }
+  html:not(.dark) .feature-icon-box.emerald { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.18); }
+
+  html:not(.dark) .agent-badge { color: #94a3b8; }
+  html:not(.dark) .agent-badge:hover { color: #7c3aed; }
+
+  html:not(.dark) ::-webkit-scrollbar-track { background: #f8fafc; }
+  html:not(.dark) ::-webkit-scrollbar-thumb { background: #cbd5e1; }
 </style>
