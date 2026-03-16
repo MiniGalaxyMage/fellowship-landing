@@ -225,10 +225,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         </tr>
       </thead>
       <tbody>
-        <tr><td>Sound</td><td><code>{ sound: done }</code></td><td>Play a system sound (<code>done</code>, <code>error</code>, <code>review</code>)</td></tr>
-        <tr><td>Desktop</td><td><code>{ notify: desktop }</code></td><td>Native OS notification (zero config)</td></tr>
-        <tr><td>Telegram</td><td><code>{ notify: telegram }</code></td><td>Message to Telegram (requires bot token + chat ID)</td></tr>
-        <tr><td>Slack</td><td><code>{ notify: slack }</code></td><td>Message to Slack webhook (set <code>FELLOWSHIP_SLACK_WEBHOOK</code> env var)</td></tr>
+        <tr><td>Sound</td><td><code>&lbrace; sound: done &rbrace;</code></td><td>Play a system sound (<code>done</code>, <code>error</code>, <code>review</code>)</td></tr>
+        <tr><td>Desktop</td><td><code>&lbrace; notify: desktop &rbrace;</code></td><td>Native OS notification (zero config)</td></tr>
+        <tr><td>Telegram</td><td><code>&lbrace; notify: telegram &rbrace;</code></td><td>Message to Telegram (requires bot token + chat ID)</td></tr>
+        <tr><td>Slack</td><td><code>&lbrace; notify: slack &rbrace;</code></td><td>Message to Slack webhook (set <code>FELLOWSHIP_SLACK_WEBHOOK</code> env var)</td></tr>
         <tr><td>Custom command</td><td><code>"your shell command"</code></td><td>Run any shell command with environment variables</td></tr>
       </tbody>
     </table>
@@ -261,11 +261,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <pre><code><span class="key">hooks:</span>
   <span class="key">onComplete:</span>
     <span class="comment"># Log to a file</span>
-    - <span class="string">"echo '$FELLOWSHIP_TASK completed in ${FELLOWSHIP_DURATION}s' >> ~/fellowship.log"</span>
+    - <span class="string">"echo '$FELLOWSHIP_TASK completed in $FELLOWSHIP_DURATION s' >> ~/fellowship.log"</span>
     <span class="comment"># Call a webhook</span>
-    - <span class="string">"curl -X POST https://your-api.com/webhook -d '{\"task\": \"$FELLOWSHIP_TASK\", \"status\": \"$FELLOWSHIP_STATUS\"}'"</span>
+    - <span class="string">"curl -X POST https://your-api.com/webhook -d '...' "</span>
     <span class="comment"># Send a Discord notification</span>
-    - <span class="string">"curl -H 'Content-Type: application/json' -d '{\"content\": \"Fellowship: $FELLOWSHIP_TASK — $FELLOWSHIP_STATUS\"}' $DISCORD_WEBHOOK_URL"</span></code></pre>
+    - <span class="string">"curl -H 'Content-Type: application/json' -d '...' $DISCORD_WEBHOOK_URL"</span></code></pre>
     </div>
 
     <h3 id="telegram-setup">Setting up Telegram notifications</h3>
