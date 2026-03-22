@@ -48,61 +48,58 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
     <!-- ============ MEMORY SYSTEM ============ -->
     <h2>The Memory System</h2>
-    <p>Fellowship maintains a persistent memory that grows with every run. This is what makes Day 30 runs better than Day 1.</p>
+    <p>Fellowship's memory is a <strong>local SQLite graph</strong> — no vector database, no embeddings, no external infra. It runs on your machine, commits to your repo, and grows with every run.</p>
+
+    <p>The graph has two layers:</p>
+
+    <h3>Layer 1 — Memory Graph (MCP)</h3>
+    <p>The core. A structured knowledge graph exposed to agents via an <a href="/docs/concepts#memory-graph">MCP server</a>. Every run, agents <em>must</em> search it before writing code. Every decision, gotcha, or lesson is recorded as a node.</p>
 
     <table class="docs-table">
       <thead>
-        <tr>
-          <th>File</th>
-          <th>Purpose</th>
-          <th>Updated</th>
-        </tr>
+        <tr><th>Node type</th><th>What it stores</th><th>Example</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td><code>learnings.md</code></td>
-          <td>Raw lessons from each run</td>
-          <td>After every run</td>
-        </tr>
-        <tr>
-          <td><code>learnings-distilled.md</code></td>
-          <td>Consolidated top learnings (max 30)</td>
-          <td>After every run</td>
-        </tr>
-        <tr>
-          <td><code>gotchas.md</code></td>
-          <td>Technical pitfalls and warnings</td>
-          <td>After every run</td>
-        </tr>
-        <tr>
-          <td><code>architecture.md</code></td>
-          <td>Project architecture reference</td>
-          <td>On init/adopt</td>
-        </tr>
-        <tr>
-          <td><code>fellowship.db</code></td>
-          <td>Runs, decisions, tasks, events (SQLite + FTS5)</td>
-          <td>Continuously</td>
-        </tr>
+        <tr><td><code>learning</code></td><td>General lessons from experience</td><td>"Always use parameterized queries"</td></tr>
+        <tr><td><code>gotcha</code></td><td>Technical traps with specific fix</td><td>"Supabase pooler breaks on port 5432"</td></tr>
+        <tr><td><code>decision</code></td><td>Architectural choices with rationale</td><td>"JWT over sessions — stateless, scales"</td></tr>
+        <tr><td><code>code-pattern</code></td><td>Reusable implementation patterns</td><td>"Auth middleware pattern for Express"</td></tr>
+        <tr><td><code>architecture</code></td><td>System-level structural knowledge</td><td>"Event-driven: services via queues"</td></tr>
       </tbody>
     </table>
 
-    <h3>How Memory Improves Runs</h3>
+    <h3>Mandatory Protocol</h3>
+    <p>Agents follow this protocol on every run — it's enforced in the agent prompt, not just suggested:</p>
     <ol>
-      <li>Before generating a spec, Fellowship searches learnings via FTS5</li>
-      <li>Relevant learnings + all gotchas are injected as context</li>
-      <li>The spec includes a <code>## Context Considered</code> section showing exactly what was used</li>
-      <li>After each run, new learnings are extracted and distilled</li>
+      <li><strong>MANDATORY FIRST STEP:</strong> <code>graph_search</code> with task keywords</li>
+      <li><strong>Before writing any code:</strong> minimum 2 <code>graph_query</code> calls</li>
+      <li><strong>During implementation:</strong> record learnings/gotchas/decisions when friction occurs</li>
+      <li><strong>Post-run:</strong> graph is enriched for the next agent</li>
     </ol>
+
+    <h3>Layer 2 — Markdown files (human-readable)</h3>
+    <p>Alongside the graph, Fellowship maintains plain Markdown files you can read, edit, and commit:</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr><th>File</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>learnings.md</code></td><td>Raw lessons extracted from runs</td></tr>
+        <tr><td><code>learnings-distilled.md</code></td><td>Top 30 distilled learnings (injected in agent prompt)</td></tr>
+        <tr><td><code>gotchas.md</code></td><td>Technical pitfalls and warnings</td></tr>
+        <tr><td><code>architecture.md</code></td><td>Project architecture reference (used when MCP unavailable)</td></tr>
+        <tr><td><code>fellowship.db</code></td><td>SQLite: Memory Graph + runs + decisions (gitignored)</td></tr>
+      </tbody>
+    </table>
 
     <!-- ============ SPEC-FIRST ============ -->
     <h2>Spec-First Workflow</h2>
-    <p>Every task gets a detailed spec before any code is written. The spec engine takes your task description and combines it with:</p>
+    <p>Every task gets a detailed spec before any code is written. The spec engine combines your task with graph context:</p>
     <ul>
-      <li><strong>Project architecture</strong> &mdash; from <code>architecture.md</code></li>
-      <li><strong>Past learnings</strong> &mdash; full-text searched via FTS5 for relevance</li>
-      <li><strong>Gotchas</strong> &mdash; all known pitfalls injected as warnings</li>
+      <li><strong>Memory Graph results</strong> &mdash; graph_search finds relevant learnings, gotchas, decisions</li>
       <li><strong>Agent profile</strong> &mdash; role-specific guidelines and conventions</li>
+      <li><strong>Architecture</strong> &mdash; from graph or <code>architecture.md</code> as fallback</li>
     </ul>
 
     <p>This means the agent starts with a complete picture &mdash; not just your one-liner task description. You can preview any spec before running it:</p>
