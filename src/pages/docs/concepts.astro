@@ -246,6 +246,127 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </tbody>
     </table>
 
+    <!-- ============ MEMORY GRAPH (MCP) ============ -->
+    <h2>Memory Graph (MCP)</h2>
+    <p>The Memory Graph is a local SQLite-backed knowledge graph that persists structured knowledge across every run. It's exposed to agents via an MCP (Model Context Protocol) server.</p>
+
+    <h3>Node Types</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>learning</code></td><td>Lessons derived from completed runs</td></tr>
+        <tr><td><code>gotcha</code></td><td>Technical pitfalls and warnings to avoid</td></tr>
+        <tr><td><code>decision</code></td><td>Architectural and design choices</td></tr>
+        <tr><td><code>code-pattern</code></td><td>Reusable patterns found in the codebase</td></tr>
+        <tr><td><code>architecture</code></td><td>High-level structural knowledge</td></tr>
+      </tbody>
+    </table>
+
+    <h3>MCP Tools Exposed</h3>
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>graph_search</code></td><td>Full-text search across all nodes</td></tr>
+        <tr><td><code>graph_query</code></td><td>Structured query by type, tags, or relationships</td></tr>
+        <tr><td><code>record_learning</code></td><td>Add a new learning node</td></tr>
+        <tr><td><code>record_gotcha</code></td><td>Add a new gotcha node</td></tr>
+        <tr><td><code>record_decision</code></td><td>Add a new decision node</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Mandatory First Step</h3>
+    <p>Every run begins with a <code>graph_search</code> before any code is written. This ensures the agent consults accumulated project knowledge &mdash; gotchas, past decisions, known patterns &mdash; before starting implementation.</p>
+
+    <h3>Organic Registration</h3>
+    <p>Knowledge is only recorded when there's real friction or a meaningful insight. The graph grows gradually and intentionally, not by noise &mdash; keeping retrieval signal high.</p>
+
+    <!-- ============ SMART AGENT SELECTION ============ -->
+    <h2>Smart Agent Selection</h2>
+    <p>When you run a task, Fellowship automatically picks the most appropriate agent from your team. The selection uses a two-phase approach:</p>
+
+    <ol>
+      <li><strong>Keyword matching</strong> &mdash; each agent's <code>scope</code> in <code>team.yaml</code> is scored against the task description</li>
+      <li><strong>LLM fallback</strong> &mdash; if no agent scores above <code>HIGH_CONFIDENCE_THRESHOLD = 0.4</code>, an LLM call disambiguates</li>
+    </ol>
+
+    <p>You can bypass the selector with the <code>--agent &lt;id&gt;</code> flag:</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Let Fellowship pick the agent</span>
+<span class="cmd">fellowship</span> run <span class="string">"add login form"</span>
+
+<span class="comment"># Force a specific agent</span>
+<span class="cmd">fellowship</span> run <span class="string">"add login form"</span> <span class="flag">--agent</span> carlos</code></pre>
+    </div>
+
+    <h3>Improving Selection via team.yaml</h3>
+    <p>A well-defined <code>scope</code> field in <code>team.yaml</code> is the most effective way to improve automatic selection. Include specific technologies, file paths, and task verbs that belong to each agent:</p>
+
+    <div class="config-block">
+      <pre><code><span class="key">agents:</span>
+  <span class="key">- id:</span> <span class="value">luna</span>
+    <span class="key">role:</span> <span class="value">Frontend engineer</span>
+    <span class="key">scope:</span> <span class="value">React components, CSS, UI, forms, pages, routing, Tailwind</span>
+  <span class="key">- id:</span> <span class="value">carlos</span>
+    <span class="key">role:</span> <span class="value">Backend engineer</span>
+    <span class="key">scope:</span> <span class="value">API endpoints, database queries, auth, middleware, services</span></code></pre>
+    </div>
+
+    <!-- ============ FELLOWSHIP FIX ============ -->
+    <h2><code>fellowship fix</code></h2>
+    <p><code>fellowship fix</code> is a specialized command for bug resolution. It runs a three-step pipeline:</p>
+
+    <ol>
+      <li><strong>Diagnose</strong> &mdash; analyzes the bug description against the codebase and memory graph</li>
+      <li><strong>Generate fix spec</strong> &mdash; produces a targeted spec scoped to the specific defect</li>
+      <li><strong>Run</strong> &mdash; executes the fix using the most appropriate agent</li>
+    </ol>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> fix <span class="string">"payment webhook returns 500 when amount is zero"</span></code></pre>
+    </div>
+
+    <p>Unlike <code>fellowship run</code>, the fix command treats the input as a bug description rather than a feature request. The spec engine focuses on root-cause analysis and minimal targeted changes.</p>
+
+    <!-- ============ FELLOWSHIP MEMORY TUI ============ -->
+    <h2><code>fellowship memory</code> &mdash; Interactive TUI</h2>
+    <p><code>fellowship memory</code> (alias: <code>fellowship mem</code>) opens an interactive terminal UI for browsing everything Fellowship knows about your project.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> memory        <span class="comment"># open TUI</span>
+<span class="cmd">fellowship</span> mem           <span class="comment"># alias</span></code></pre>
+    </div>
+
+    <p>The TUI has four views: <strong>Dashboard</strong> (stats overview), <strong>Runs</strong> (full run history), <strong>Memory</strong> (browse learnings, gotchas, decisions, reviews), and <strong>Diff</strong> (side-by-side diff per run). Navigate with vim keys (<code>jk</code>) or arrow keys. See the <a href="/docs/commands#memory">Commands reference</a> for all keyboard shortcuts.</p>
+
     <!-- ============ SECURITY ============ -->
     <h2>Security</h2>
     <p>Fellowship includes prompt injection protection:</p>
