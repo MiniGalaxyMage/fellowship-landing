@@ -100,6 +100,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <tr><td><code>--spec &lt;path&gt;</code></td><td>Use an existing spec instead of generating one</td></tr>
         <tr><td><code>--scribe</code></td><td>Force documentation generation after run</td></tr>
         <tr><td><code>--no-scribe</code></td><td>Skip documentation generation</td></tr>
+        <tr><td><code>--agent &lt;id&gt;</code></td><td>Force a specific agent, bypassing the smart selector</td></tr>
       </tbody>
     </table>
 
@@ -174,6 +175,23 @@ You'll hear a sound when it's done 🔊</span></code></pre>
         <span class="terminal-block-title">terminal</span>
       </div>
       <pre><code><span class="cmd">fellowship</span> hire</code></pre>
+    </div>
+
+    <!-- ============ FIX ============ -->
+    <h2 id="fix"><code>fellowship fix</code></h2>
+    <p>Diagnose a bug, generate a targeted fix spec, and run the fix agent. Use this instead of <code>fellowship run</code> when you need to resolve a specific defect.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="cmd">fellowship</span> fix <span class="string">"payment webhook returns 500 when amount is zero"</span>
+
+<span class="comment"># With human review</span>
+<span class="cmd">fellowship</span> fix <span class="string">"login fails after password reset"</span> <span class="flag">--review</span></code></pre>
     </div>
 
     <!-- ============ SPEC ============ -->
