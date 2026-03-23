@@ -287,6 +287,50 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     <h3>Organic Registration</h3>
     <p>Knowledge is only recorded when there's real friction or a meaningful insight. The graph grows gradually and intentionally, not by noise &mdash; keeping retrieval signal high.</p>
 
+    <!-- ============ GRAPH VERSIONING ============ -->
+    <h2>Graph Versioning</h2>
+    <p>The Memory Graph is portable. Export it to a <code>.jsonl.gz</code> file, commit it to your repo, and anyone who clones the project can restore full knowledge with <code>fellowship import</code>.</p>
+
+    <div class="flow-diagram">Day 1  → runs accumulate knowledge in the graph
+Day 30 → <span class="accent">fellowship export</span> → commit graph.jsonl.gz
+
+New team member clones → <span class="accent">fellowship import</span>
+                       → starts with 30 days of knowledge
+
+No onboarding. No "what did we decide about X?" questions.
+Knowledge travels with the code.</div>
+
+    <h3>What to commit</h3>
+    <table class="docs-table">
+      <thead>
+        <tr><th>File</th><th>Commit?</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.fellowship/graph.jsonl.gz</code></td><td>&#10003; Yes</td><td>Portable graph snapshot &mdash; the knowledge baseline</td></tr>
+        <tr><td><code>.fellowship/config.yaml</code></td><td>&#10003; Yes</td><td>Project config shared across the team</td></tr>
+        <tr><td><code>.fellowship/team.yaml</code></td><td>&#10003; Yes</td><td>Agent definitions and role boundaries</td></tr>
+        <tr><td><code>.fellowship/profiles/</code></td><td>&#10003; Yes</td><td>Agent profiles and guidelines</td></tr>
+        <tr><td><code>.fellowship/fellowship.db</code></td><td>&#10007; No</td><td>Binary SQLite file &mdash; gitignored, regenerated from import</td></tr>
+      </tbody>
+    </table>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Export and commit the graph</span>
+<span class="cmd">fellowship</span> export
+<span class="cmd">git</span> add .fellowship/graph.jsonl.gz
+<span class="cmd">git</span> commit <span class="flag">-m</span> <span class="string">"chore: update knowledge graph snapshot"</span>
+
+<span class="comment"># New team member restores full knowledge</span>
+<span class="cmd">git</span> clone &lt;repo&gt;
+<span class="cmd">fellowship</span> import</code></pre>
+    </div>
+
     <!-- ============ SMART AGENT SELECTION ============ -->
     <h2>Smart Agent Selection</h2>
     <p>When you run a task, Fellowship automatically picks the most appropriate agent from your team. The selection uses a two-phase approach:</p>

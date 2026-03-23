@@ -286,7 +286,7 @@ import ThemeToggle from '../components/ThemeToggle.astro';
             </p>
             <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship
 
-  <span class="text-white">Fellowship v0.5.2</span>
+  <span class="text-white">Fellowship v0.6.1</span>
 
   <span class="text-cyan-400">></span> <span class="text-white">Run a task</span>
     Status
@@ -452,6 +452,74 @@ import ThemeToggle from '../components/ThemeToggle.astro';
   <span class="text-slate-400">Run: fellowship review</span></div>
           </div>
 
+          <!-- Graph Versioning -->
+          <div class="feature-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="feature-icon-box purple">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Graph Versioning</h3>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
+              Serialize the Memory Graph to <code class="text-purple-300 text-xs">.fellowship/graph.jsonl.gz</code>. Clone a repo and <code class="text-purple-300 text-xs">fellowship import</code> to start with full knowledge from day 0.
+            </p>
+            <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship export
+  <span class="text-emerald-400">→</span> <span class="text-slate-400">.fellowship/graph.jsonl.gz</span>
+
+<span class="text-slate-600"># new team member:</span>
+<span class="text-cyan-400">$</span> git clone repo && fellowship import
+  <span class="text-emerald-400">✓</span> <span class="text-slate-400">47 nodes restored</span>
+  <span class="text-emerald-400">✓</span> <span class="text-slate-400">starts with 30 days of knowledge</span></div>
+          </div>
+
+          <!-- Editable Memory Graph TUI -->
+          <div class="feature-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="feature-icon-box emerald">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Editable Memory Graph TUI</h3>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
+              <code class="text-purple-300 text-xs">fellowship memory</code> now supports add, edit, and delete nodes directly from the terminal UI. Full graph control without leaving the terminal.
+            </p>
+            <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship memory
+
+  <span class="text-white">Memory Graph</span>  <span class="text-slate-500">47 nodes</span>
+
+  <span class="text-purple-300">learning</span>  Always use parameterized queries
+  <span class="text-amber-300">gotcha</span>    Supabase pooler breaks on port 5432
+  <span class="text-cyan-300">decision</span>  JWT over sessions — stateless
+
+  <span class="text-slate-500">a add  e edit  d delete  / search  q quit</span></div>
+          </div>
+
+          <!-- Smart fellowship learn -->
+          <div class="feature-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="feature-icon-box amber">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Smart <code class="font-mono text-base">fellowship learn</code></h3>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">
+              Interactive wizard with typed nodes: <code class="text-purple-300 text-xs">learning</code>, <code class="text-purple-300 text-xs">gotcha</code>, <code class="text-purple-300 text-xs">decision</code>, <code class="text-purple-300 text-xs">code-pattern</code>, <code class="text-purple-300 text-xs">architecture</code>. No file required.
+            </p>
+            <div class="code-snippet"><span class="text-cyan-400">$</span> fellowship learn
+
+  what did you learn? <span class="text-white">_</span>
+  node type? <span class="text-emerald-400">[learning]</span> gotcha decision code-pattern architecture
+
+<span class="text-cyan-400">$</span> fellowship learn "Always use parameterized queries" <span class="text-amber-400">--type gotcha</span>
+  <span class="text-emerald-400">✓</span> <span class="text-slate-400">saved to memory graph</span></div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -519,6 +587,18 @@ import ThemeToggle from '../components/ThemeToggle.astro';
             <div class="cmd-row">
               <code class="text-cyan-400">fellowship scribe</code>
               <span class="text-slate-600">Auto-generate docs from current code</span>
+            </div>
+            <div class="cmd-row">
+              <code class="text-cyan-400">fellowship export</code>
+              <span class="text-slate-600">Serialize Memory Graph to .jsonl.gz</span>
+            </div>
+            <div class="cmd-row">
+              <code class="text-cyan-400">fellowship import</code>
+              <span class="text-slate-600">Restore Memory Graph from .jsonl.gz</span>
+            </div>
+            <div class="cmd-row">
+              <code class="text-cyan-400">fellowship learn <span class="text-purple-300">"insight"</span></code>
+              <span class="text-slate-600">Add typed node to Memory Graph</span>
             </div>
           </div>
         </div>
