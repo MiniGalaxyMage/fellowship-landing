@@ -291,7 +291,7 @@ You'll hear a sound when it's done 🔊</span></code></pre>
 
     <!-- ============ MEMORY ============ -->
     <h2 id="memory"><code>fellowship memory</code></h2>
-    <p>Interactive TUI with four views: Dashboard, Runs, Memory, and Diff.</p>
+    <p>Interactive TUI with four views: Dashboard, Runs, Memory, and Diff. Now supports add, edit, and delete of Memory Graph nodes directly from the terminal UI.</p>
 
     <div class="terminal-block">
       <div class="terminal-block-header">
@@ -332,6 +332,9 @@ You'll hear a sound when it's done 🔊</span></code></pre>
         <tr><td><code>h</code> / <code>l</code></td><td>Switch memory tabs</td></tr>
         <tr><td><code>Enter</code></td><td>Expand item</td></tr>
         <tr><td><code>/</code></td><td>Search</td></tr>
+        <tr><td><code>a</code></td><td>Add new node</td></tr>
+        <tr><td><code>e</code></td><td>Edit selected node</td></tr>
+        <tr><td><code>D</code></td><td>Delete selected node</td></tr>
         <tr><td><code>u</code> / <code>d</code></td><td>Page scroll (diff)</td></tr>
         <tr><td><code>q</code></td><td>Quit</td></tr>
       </tbody>
@@ -339,7 +342,7 @@ You'll hear a sound when it's done 🔊</span></code></pre>
 
     <!-- ============ LEARN ============ -->
     <h2 id="learn"><code>fellowship learn</code></h2>
-    <p>Manually add a learning to the project memory.</p>
+    <p>Interactive wizard to add a typed node to the Memory Graph. Supports five node types: <code>learning</code>, <code>gotcha</code>, <code>decision</code>, <code>code-pattern</code>, <code>architecture</code>. No file required — runs fully in the terminal.</p>
 
     <div class="terminal-block">
       <div class="terminal-block-header">
@@ -348,7 +351,73 @@ You'll hear a sound when it's done 🔊</span></code></pre>
         <div class="terminal-block-dot" style="background:#28c840"></div>
         <span class="terminal-block-title">terminal</span>
       </div>
-      <pre><code><span class="cmd">fellowship</span> learn <span class="string">"Always use parameterized queries — never string interpolation for SQL"</span></code></pre>
+      <pre><code><span class="comment"># Interactive wizard — prompts for content and type</span>
+<span class="cmd">fellowship</span> learn
+
+<span class="comment"># Inline with explicit type</span>
+<span class="cmd">fellowship</span> learn <span class="string">"Always use parameterized queries"</span> <span class="flag">--type</span> gotcha
+
+<span class="comment"># From a source file</span>
+<span class="cmd">fellowship</span> learn <span class="flag">--type</span> decision <span class="flag">--source</span> architecture.md</code></pre>
+    </div>
+
+    <h3>Node Types</h3>
+    <table class="docs-table">
+      <thead>
+        <tr><th>Type</th><th>Use for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>learning</code></td><td>General lessons derived from experience</td></tr>
+        <tr><td><code>gotcha</code></td><td>Technical pitfalls with a specific fix</td></tr>
+        <tr><td><code>decision</code></td><td>Architectural choices with rationale</td></tr>
+        <tr><td><code>code-pattern</code></td><td>Reusable implementation patterns</td></tr>
+        <tr><td><code>architecture</code></td><td>System-level structural knowledge</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ EXPORT ============ -->
+    <h2 id="export"><code>fellowship export</code></h2>
+    <p>Exports the Memory Graph (nodes + edges) to a portable <code>.jsonl.gz</code> file. Commit this file to version-control your project knowledge so any team member can restore it with <code>fellowship import</code>.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Export to default location</span>
+<span class="cmd">fellowship</span> export                              <span class="comment"># → .fellowship/graph.jsonl.gz</span>
+
+<span class="comment"># Custom output path</span>
+<span class="cmd">fellowship</span> export <span class="flag">--output</span> ./my-graph.jsonl.gz
+
+<span class="comment"># Uncompressed .jsonl for debugging</span>
+<span class="cmd">fellowship</span> export <span class="flag">--pretty</span></code></pre>
+    </div>
+
+    <!-- ============ IMPORT ============ -->
+    <h2 id="import"><code>fellowship import</code></h2>
+    <p>Restores the Memory Graph from a <code>.jsonl.gz</code> file. Run after cloning a repo to start with accumulated knowledge from day 0. By default replaces the existing graph; use <code>--merge</code> to combine.</p>
+
+    <div class="terminal-block">
+      <div class="terminal-block-header">
+        <div class="terminal-block-dot" style="background:#ff5f57"></div>
+        <div class="terminal-block-dot" style="background:#febc2e"></div>
+        <div class="terminal-block-dot" style="background:#28c840"></div>
+        <span class="terminal-block-title">terminal</span>
+      </div>
+      <pre><code><span class="comment"># Import from default location</span>
+<span class="cmd">fellowship</span> import                              <span class="comment"># from .fellowship/graph.jsonl.gz</span>
+
+<span class="comment"># Custom input path</span>
+<span class="cmd">fellowship</span> import <span class="flag">--input</span> ./my-graph.jsonl.gz
+
+<span class="comment"># Merge with existing graph instead of replacing</span>
+<span class="cmd">fellowship</span> import <span class="flag">--merge</span>
+
+<span class="comment"># Preview without modifying DB</span>
+<span class="cmd">fellowship</span> import <span class="flag">--dry-run</span></code></pre>
     </div>
 
     <!-- ============ SCRIBE ============ -->
